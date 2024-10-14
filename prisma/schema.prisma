@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usert {
+  id          Int             @id @default(autoincrement())
+  email       String          @unique
+  username    String          @unique
+  password    String
+  userRole    String
+  authorName  String
+  authorDetail String?
+  authorImage String?
+  blocked     String?
+  blogs       Blogt[]         @relation("UserToBlogt")
+  blogslive   Bloglivet[]     @relation("UserToBloglivet")
+  topics      TutorialTopic[] @relation("UserToTopic")
+}
+
+model Blogt {
+  id             Int          @id @default(autoincrement())
+  title          String
+  description    String?
+  slug           String
+  content        String?      @db.Text
+  image          String? 
+  published      String       @default("pending")
+  publishDate    DateTime
+  scheduledAt    DateTime?
+  delete_request String?
+  createdAt      DateTime     @default(now())
+  author         Usert        @relation("UserToBlogt", fields: [author_id], references: [id])
+  author_id      Int
+  bloglive       Bloglivet?   @relation("BlogtToBloglivet", fields: [bloglive_id], references: [id])
+  bloglive_id    Int?
+  featuredpost   String
+  category       Category     @relation("BlogCategory", fields: [category_id], references: [id])
+  category_id    Int 
+}
+
+model Bloglivet {
+  id             Int          @id @default(autoincrement())
+  title          String
+  description    String?
+  slug           String
+  content        String?      @db.Text
+  image          String? 
+  published      String
+  publishDate    DateTime
+  createdAt      DateTime     @default(now())
+  author         Usert        @relation("UserToBloglivet", fields: [author_id], references: [id])
+  author_id      Int
+  blogt          Blogt[]      @relation("BlogtToBloglivet")
+  featuredpost   String
+  category       Category     @relation("BlogLiveCategory", fields: [category_id], references: [id])
+  category_id    Int
+  delete_request String?   
+}
+
+
+model Favicont {
+  id    Int     @id @default(autoincrement())
+  image String?
+}
+
+model TutorialTopic {
+  id            Int                    @id @default(autoincrement())
+  title         String                 @db.VarChar(255)
+  slug          String?
+  is_active     String
+  subtopics     TutorialSubtopic[]     @relation("TopicToSubTopic")
+  subtopicslive TutorialSubtopicLive[] @relation("TopicToSubTopicLive")
+  author        Usert                  @relation("UserToTopic", fields: [author_id], references: [id])
+  author_id     Int
+}
+
+model TutorialSubtopic {
+  id              Int           @id @default(autoincrement())
+  title           String
+  description     String?
+  content         String?
+  slug            String?
+  published       String?
+  preference      Int
+  topic           TutorialTopic @relation("TopicToSubTopic", fields: [topic_id], references: [id])
+  topic_id        Int
+  delete_request  String?
+  createdAt       DateTime      @default(now())
+  subtopiclive_id Int?
+}
+
+model TutorialSubtopicLive {
+  id             Int           @id @default(autoincrement())
+  title          String
+  description    String?
+  content        String?
+  slug           String?
+  published      String?
+  preference     Int
+  topic          TutorialTopic @relation("TopicToSubTopicLive", fields: [topic_id], references: [id])
+  topic_id       Int
+  delete_request String?
+  createdAt      DateTime      @default(now())
+}
+
+model Category {
+  id        Int             @id @default(autoincrement())
+  name      String          @unique
+  title         String
+  description   String
+  slug      String   @unique
+  isActive  Boolean  @default(true)
+  blogs     Blogt[]         @relation("BlogCategory") // Relation to Blogt
+  blogslive Bloglivet[]      @relation("BlogLiveCategory") // Relation to Bloglivet
+}
