@@ -1,12 +1,4 @@
 "use client";
-import Hero from "@/components/home/Hero";
-import TraficSources from "@/components/home/TraficSources";
-import transactionImage from "../../../public/transaction.png";
-import ExpectedFeatures from "@/components/home/ExpectedFeatures";
-import Leads from "@/components/home/Leads";
-import Pricing from "@/components/home/Pricing";
-import FAQ from "@/components/home/FAQ";
-import HeroSecondary from "@/components/home/HeroSecondary";
 import WhatWeDo from "@/components/home/WhatWeDo";
 import Capabilities from "@/components/home/Capabilities";
 import Showcase from "@/components/home/Showcase";
@@ -24,63 +16,72 @@ import MapAndAddress from "../common/MapAndAddress";
 import Clients from "./Clients";
 
 const HomePage = () => {
-  const transactionTextContent = {
-    mainHeading: "Insights & spam detection.",
-    boldParaText: "Open stage API",
-    remainingParaText:
-      "Open stage API with a core feature of data occaecat cupidatat proident, taken possession of my entire soul, like these sweet mornings.",
-  };
+ 
   return (
-    <>
-      <main>
-        <Hero />
-        <div className="bg-red-100">
-          <TraficSources
-            textContent={transactionTextContent}
-            image={transactionImage}
-          />
-          <ExpectedFeatures />
-          <Leads />
-        </div>
-        <div className="bg-indigo-900">
-          <Pricing />
-        </div>
-        <div className="bg-indigo-950">
-          <FAQ />
-        </div>
-      </main>
-      <main>
-        <HeroSecondary />
-        <div className="bg-[#111013]">
-          <WhatWeDo />
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 ">
-          <Capabilities />
-          <Showcase />
-        </div>
+    <main className="space-y-16">
+      {/* Section 1: Introduction */}
+      <section className="bg-[#111013]">
+        <WhatWeDo />
+      </section>
 
+      {/* Section 2: Capabilities and Showcase */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Capabilities />
+        <Showcase />
+      </section>
+
+      {/* Section 3: Web and Mobile Development */}
+      <section>
         <WebAndMobile />
-        <Clients />
-        <Testimonial />
-        <MapAndAddress />
-        <Careers />
-      </main>
-      <main>
-        <Breadcrumbs />
+      </section>
 
-        <div className="bg-[#1a191b]">
-          <TestimonialSecondary />
-        </div>
+      {/* Section 4: Clients */}
+      <section>
+        <Clients />
+      </section>
+
+      {/* Section 5: Testimonials */}
+      <section>
+        <Testimonial />
+      </section>
+
+      {/* Section 6: Map and Address */}
+      <section>
+        <MapAndAddress />
+      </section>
+
+      {/* Section 7: Careers */}
+      <section>
+        <Careers />
+      </section>
+
+      {/* Section 8: Secondary Testimonial */}
+      <section className="bg-[#1a191b]">
+        <TestimonialSecondary />
+      </section>
+
+      {/* Section 9: Awards */}
+      <section>
         <Awards />
+      </section>
+
+      {/* Section 10: Collaboration */}
+      <section>
         <Collaborate />
-      </main>
-      <main>
+      </section>
+
+      {/* Section 11: Services */}
+      <section>
         <Breadcrumbs />
         <Services />
+      </section>
+
+      {/* Section 12: Secondary Capabilities and Video */}
+      <section>
         <CapabilitiesSecondary />
         <PlayVideo />
-      </main>
-    </>
+      </section>
+    </main>
   );
 };
 

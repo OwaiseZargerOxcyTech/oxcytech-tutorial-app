@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import SideNav from "@/components/sidebar/SideNav";
 import AdminNavbar from "@/components/navbar/AdminNavbar";
 import { baseUrlDev } from "@/components/utils/CommonUrls";
-import Head from "next/head";
 
 const montserrat = Montserrat({
   weight: ["300", "400"],
@@ -41,7 +40,6 @@ export default function BlogLayout({ children }) {
       <head>
         <link rel="icon" href={faviconImageUrl} sizes="any" />
       </head>
-      <Head><script src="../../../cron" type="module"/></Head>
       <body className={montserrat.className} suppressHydrationWarning={true}>
         <AuthProviders>
           <AdminNavbar />

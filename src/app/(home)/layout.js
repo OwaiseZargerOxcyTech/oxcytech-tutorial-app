@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import { useEffect, useState } from "react";
 import { baseUrlDev } from "@/components/utils/CommonUrls";
-import Head from "next/head";
 
 
 const montserrat = Montserrat({
@@ -42,8 +41,6 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href={faviconImageUrl} sizes="any" />
       </head>
-      <Head><script src="../../../cron" type="module"/></Head>
-
       <body className={montserrat.className} suppressHydrationWarning={true}>
           <Navbar />
           <section>{children}</section>
