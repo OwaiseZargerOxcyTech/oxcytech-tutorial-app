@@ -178,7 +178,7 @@ const AddBlog = () => {
         if (error) {
           console.log("Blog Added error:", error);
         }
-        console.log(result);
+        
         // Reset form fields
         setTitle("");
         setDesc("");
