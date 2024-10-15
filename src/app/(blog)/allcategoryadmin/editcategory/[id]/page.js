@@ -1,77 +1,91 @@
 "use client";
-import React, { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
-const Page = () => {
-  const [categoryName, setCategoryName] = useState("");
+const EditCategory = () => {
+  const router = useRouter();
+  const { id } = useParams(); 
+  const [category, setCategory] = useState(null);
+  const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isActive, setIsActive] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  const { data: session, status } = useSession();
+  // Fetch category data on component mount
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await fetch(`/api/categories/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch category data");
+        }
+        const data = await response.json();
+        setCategory(data);
+        setName(data.name);
+        setTitle(data.title);
+        setDescription(data.description);
+        setIsActive(data.isActive);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
 
-  if (status === "loading") {
-    return <div></div>;
-  }
+    if (id) {
+      fetchCategory();
+    }
+  }, [id]);
 
-  if (!session || session.user.name !== "admin") {
-    return <div>Access Denied</div>;
-  }
-
-  const handleAddCategory = async (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const slug = categoryName
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-
-    const isActive = true;
+    setFormSubmitted(true);
+    setError("");
 
     try {
-      const response = await fetch("/api/categories", {
-        method: "POST",
+      const response = await fetch(`/api/categories/${id}`, {
+        method: "PUT", 
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: categoryName,
+          name,
           title,
           description,
-          slug,
           isActive,
         }),
       });
 
-      if (response.ok) {
-        setFormSubmitted(true);
-        setCategoryName("");
-        setTitle("");
-        setDescription("");
-      } else {
-        console.error("Failed to add category");
+      if (!response.ok) {
+        throw new Error("Failed to update category");
       }
-    } catch (error) {
-      console.error("Error while adding category:", error);
+
+      router.push("/allcategoryadmin");
+    } catch (err) {
+      setError(err.message);
+      setFormSubmitted(false);
     }
   };
+
+
 
   return (
     <>
       {formSubmitted && (
         <div className="toast toast-top toast-end z-50">
           <div className="alert alert-info">
-            <span>Category added successfully</span>
+            <span>Category update successfully</span>
           </div>
         </div>
       )}
 
       <div>
         <div className="card w-full bg-base-100 rounded-md">
-          <form className="card-body" onSubmit={handleAddCategory}>
+          <form className="card-body" onSubmit={handleSubmit}>
             <h1 className="pt-4 text-center text-3xl font-semibold">
-              Add Category
+            Edit Category
             </h1>
 
             <div className="mt-6">
@@ -82,8 +96,8 @@ const Page = () => {
                 type="text"
                 id="category"
                 name="category"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="mt-2 p-2 border border-gray-300 rounded w-full"
                 required
               />
@@ -133,4 +147,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default EditCategory;
