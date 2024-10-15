@@ -42,9 +42,9 @@ export default function BlogLists({ blogData }) {
     <div className="space-y-10">
       {blogData  &&
         blogData.map((blog) => (
-          <div key={blog.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div key={blog.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
             {blog.image && imageData[blog.id] && (
-              <div className="card-zoom bg-gray-100 w-[100%] h-[300px] sm:h-[450px] rounded-xl ">
+              <div className="card-zoom rounded-xl ">
                 <div className="card-zoom-image">
                   <Link prefetch={false}  href={`${blog.categoryName.toLowerCase()}/${blog.slug}`}>
                     <Image
