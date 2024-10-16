@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 const EditCategory = () => {
   const router = useRouter();
   const { id } = useParams(); 
-  const [category, setCategory] = useState(null);
+  // const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -23,7 +23,7 @@ const EditCategory = () => {
           throw new Error("Failed to fetch category data");
         }
         const data = await response.json();
-        setCategory(data);
+        // setCategory(data);
         setName(data.name);
         setTitle(data.title);
         setDescription(data.description);
