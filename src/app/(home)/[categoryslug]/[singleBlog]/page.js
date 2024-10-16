@@ -1,24 +1,24 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import BlogPage from "@/components/blog/BlogPage";
-import { useEffect, useState } from "react";
 
 const SingleBlog = ({ params }) => {
-  const { singleBlog } = params;
-  const [blogs, setBlogs] = useState([]);
+  const { categoryslug, singleBlog } = params;
+  const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBlogsBySlug = async () => {
+    const fetchSingleBlog = async () => {
       try {
         const response = await fetch(
-          `/api/getsingleblog?blogSlug=${singleBlog}`
+          `/api/blogs/get-blogs?category=${categoryslug}&blogSlug=${singleBlog}`
         );
         const data = await response.json();
 
-        if (response.ok ) {
-          setBlogs(data.result); 
+        if (response.ok) {
+          setBlog(data.result);
         } else {
-          console.error("Error fetching blogs:", data.error);
+          console.error("Error fetching blog:", data.error);
         }
       } catch (error) {
         console.error("Fetch error:", error);
@@ -27,8 +27,8 @@ const SingleBlog = ({ params }) => {
       }
     };
 
-    fetchBlogsBySlug();
-  }, [singleBlog]);
+    fetchSingleBlog();
+  }, [categoryslug, singleBlog]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -36,7 +36,7 @@ const SingleBlog = ({ params }) => {
 
   return (
     <main>
-      <BlogPage data={blogs} type="singleBlog" />
+      {blog ? <BlogPage data={blog} type="singleBlog" /> : <p>Blog not found</p>}
     </main>
   );
 };

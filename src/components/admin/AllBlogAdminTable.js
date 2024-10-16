@@ -291,7 +291,7 @@ const AllBlogAdminTable = () => {
 
   const handleGetBlogs = async (e) => {
     try {
-      const response = await fetch("/api/displayblogs", {
+      const response = await fetch("/api/admin/blogs/admin-table/display-blogs", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

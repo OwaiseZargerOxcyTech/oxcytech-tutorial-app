@@ -167,7 +167,7 @@ const AddBlog = () => {
         formData.append("categoryId", selectedCategory);
         formData.append("categoryName", categoryName);
 
-        const response = await fetch("/api/addblog", {
+        const response = await fetch("/api/admin/blogs/addblog", {
           method: "POST",
           body: formData,
           credentials: "include",
