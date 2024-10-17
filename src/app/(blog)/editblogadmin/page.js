@@ -1,11 +1,9 @@
 "use client";
-import React, { Suspense } from "react";
-import { useState, useRef, useEffect, forwardRef } from "react";
+import { useState, Suspense, useEffect,  } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
-import SideNav from "@/components/sidebar/SideNav";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams , useRouter} from "next/navigation";
 import CryptoJS from "crypto-js";
 import DatePicker from "react-datepicker";
 
@@ -23,19 +21,16 @@ const EditBlog = () => {
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
-  const [slug, setSlug] = useState("");
   const [imageName, setImageName] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedUserName, setSelectedUserName] = useState("");
   const [authorId, setAuthorId] = useState();
-  const [previousimage, setPreviousImage] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [blog, setBlog] = useState();
   const [blogLiveId, setBlogLiveId] = useState(null);
   const [featuredPost, setFeaturedPost] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [published, setPublished] = useState("N");
   const [publishType, setPublishType] = useState("now");
   const [publishDate, setPublishDate] = useState(new Date());
   const [formSubmitted, setFormSubmitted] = useState(false); 
@@ -43,57 +38,57 @@ const EditBlog = () => {
   const { data: session, status } = useSession();
 
   const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  const getBlogData = async () => {
+    try {
+      const encryptedID = searchParams.get("encryptedID");
 
-  useEffect(() => {
-    const getBlogData = async () => {
-      try {
-        const encryptedID = searchParams.get("encryptedID");
+      const blogID = decryptID(encryptedID, "thisissecret");
 
-        const blogID = decryptID(encryptedID, "thisissecret");
+      const published = searchParams.get("published");
 
-        const published = searchParams.get("published");
+      const response = await fetch("/api/fetchblog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ blogID, published }),
+      });
 
-        const response = await fetch("/api/fetchblog", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ blogID, published }),
-        });
+      const { error, result } = await response.json();
 
-        const { error, result } = await response.json();
-
-        if (error !== undefined) {
-          console.log("Blog fetchingerror:", error);
-        }
-        setBlog(result);
-      } catch (error) {
-        console.error("fetch blog operation error", error);
+      if (error !== undefined) {
+        console.log("Blog fetchingerror:", error);
       }
-    };
+      setBlog(result);
+    } catch (error) {
+      console.error("fetch blog operation error", error);
+    }
+  };
 
-    getBlogData();
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("/api/getusers", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/getusers", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+      const { error, result } = await response.json();
 
-        const { error, result } = await response.json();
-
-        if (error !== undefined) {
-          console.log("Users Get error:", error);
-        }
-        setUsers(result);
-      } catch (error) {
-        console.error("Users Get operation error", error);
+      if (error !== undefined) {
+        console.log("Users Get error:", error);
       }
-    };
-    fetchData();
+      setUsers(result);
+    } catch (error) {
+      console.error("Users Get operation error", error);
+    }
+  };
+  useEffect(() => {   
+    getBlogData(); 
+    fetchUserData();
   }, []);
 
   useEffect(() => {
@@ -101,10 +96,8 @@ const EditBlog = () => {
       setTitle(blog.title);
       setDesc(blog.description);
       setContent(blog.content);
-      setImage(blog.image);
-      setSlug(blog.slug);
       setImageName("");
-      setPreviousImage(blog.image);
+      setImage(blog.image);
       setSelectedId(blog.id);
       setAuthorId(blog.author_id);
       setBlogLiveId(blog.bloglive_id ? blog.bloglive_id : null);
@@ -156,7 +149,7 @@ const EditBlog = () => {
     setPublishType(e.target.value);
   };
 
-  const handleSelectChange = (event) => {
+  const handleAuthorChange = (event) => {
     setSelectedUserName(event.target.value);
     const user = users.find((user) => user.username === event.target.value);
     if (user) {
@@ -181,7 +174,7 @@ const EditBlog = () => {
         return;
       }
 
-      const category = categories.find((cat) => cat.id === selectedCategory);
+      const category = categories.find((category) => category.id === selectedCategory);
       const categoryName = category ? category.name : "";
 
       const formData = new FormData();
@@ -189,14 +182,12 @@ const EditBlog = () => {
       formData.append("description", desc);
       formData.append("content", content);
       formData.append("image", image);
-      formData.append("slug", slug);
       formData.append("selectedId", selectedId);
-      formData.append("previousimage", previousimage);
       formData.append("published", searchParams.get("published"));
       formData.append("publishDate", publishDateValue.toISOString());
       formData.append("author_id", authorId);
       formData.append("blogLiveId", blogLiveId);
-      formData.append("featuredPost", featuredPost);
+      formData.append("featuredpost", featuredPost);
       formData.append("categoryId", selectedCategory);
       formData.append("categoryName", categoryName);
 
@@ -206,11 +197,12 @@ const EditBlog = () => {
       });
 
       const { error, result } = await response.json();
+      console.log(result)
 
       if (error !== undefined) {
         console.log("Blog Updated error:", error);
       }else{
-        window.location.href = "/allblogadmin";
+        router.push("/allblogadmin");
       }
       setFormSubmitted(false);
     } catch (error) {
@@ -337,7 +329,7 @@ const EditBlog = () => {
           </select>
 
           <select
-            onChange={handleSelectChange}
+            onChange={handleAuthorChange}
             value={selectedUserName || ""}
             className="mt-6 select select-bordered w-full"
             required
