@@ -47,3 +47,4 @@ cron.schedule("*/5 * * * *", async () => {
   }
 });
 console.log("cron is running");
+// this only runs locally
