@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import BlogPage from "@/components/blog/BlogPage";
 
-const SlugPage = ({ params }) => {
+const CategorySlug = ({ params }) => {
   const { categoryslug } = params;
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,12 +11,12 @@ const SlugPage = ({ params }) => {
     const fetchBlogsByCategory = async () => {
       try {
         const response = await fetch(
-          `/api/getpublishedblogs?category=${categoryslug}`
+          `/api/blogs/get-blogs?category=${categoryslug}`
         );
         const data = await response.json();
 
         if (response.ok && Array.isArray(data.result)) {
-          setBlogs(data.result); 
+          setBlogs(data.result);
         } else {
           console.error("Error fetching blogs:", data.error);
         }
@@ -41,4 +41,4 @@ const SlugPage = ({ params }) => {
   );
 };
 
-export default SlugPage;
+export default CategorySlug;

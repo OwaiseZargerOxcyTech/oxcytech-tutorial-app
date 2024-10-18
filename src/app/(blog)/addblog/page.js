@@ -33,28 +33,29 @@ const AddBlog = () => {
   const router = useRouter();
 
   // Fetch users on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/getusers", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("/api/getusers", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        const { error, result } = await response.json();
+      const { error, result } = await response.json();
 
-        if (error) {
-          console.log("Users Get error:", error);
-        } else {
-          setUsers(result);
-        }
-      } catch (error) {
-        console.error("Users Get operation error", error);
+      if (error) {
+        console.log("Users Get error:", error);
+      } else {
+        setUsers(result);
       }
-    };
-    fetchData();
+    } catch (error) {
+      console.error("Users Get operation error", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
   }, []);
 
   const fetchCategories = async () => {
@@ -167,7 +168,7 @@ const AddBlog = () => {
         formData.append("categoryId", selectedCategory);
         formData.append("categoryName", categoryName);
 
-        const response = await fetch("/api/addblog", {
+        const response = await fetch("/api/admin/blogs/add", {
           method: "POST",
           body: formData,
           credentials: "include",
@@ -178,7 +179,7 @@ const AddBlog = () => {
         if (error) {
           console.log("Blog Added error:", error);
         }
-        
+
         // Reset form fields
         setTitle("");
         setDesc("");

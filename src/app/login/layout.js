@@ -4,7 +4,6 @@ import "../globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
-import { baseUrlDev } from "@/components/utils/CommonUrls";
 
 const montserrat = Montserrat({
   weight: ["300", "400"],
@@ -16,9 +15,7 @@ export default function LoginLayout({ children }) {
   useEffect(() => {
     const getfaviconimage = async () => {
       try {
-        const baseUrl = {baseUrlDev};
-
-        const response = await fetch(baseUrl + "/api/combinedapi", {
+        const response = await fetch( "/api/combinedapi", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

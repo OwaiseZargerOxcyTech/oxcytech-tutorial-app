@@ -129,36 +129,24 @@ const AllBlogAdminTable = () => {
         size: 80,
         Cell: ({ row }) => (
           <div>
-            {((row.original.bloglive_id !== undefined &&
-              row.original.bloglive_id !== null &&
-              row.original.bloglive_id !== "null" &&
-              row.original.bloglive_id !== "") ||
-              row.original.published === "Y") && (
-              <button className="mr-2">
-                <EyeIcon
-                  onClick={() => {
-                    handleBlogLiveView(row);
-                  }}
-                  className="h-5 w-5 text-red-500"
-                />
-              </button>
-            )}
-            {row.original.published === "N" && (
-              <button className="mr-2">
-                <EyeIcon
-                  onClick={() => {
-                    handleBlogView(row);
-                  }}
-                  className="h-5 w-5 text-green-500"
-                />
-              </button>
-            )}
+            <button className="mr-2">
+              <EyeIcon
+                onClick={() => {
+                  handleBlogLiveView(row);
+                }}
+                className={
+                  row.original.published === "Y"
+                    ? "h-5 w-5 text-green-500"
+                    : "h-5 w-5 text-red-500"
+                }
+              />
+            </button>
             <button className="mr-2">
               <PencilIcon
                 onClick={() => {
                   handleBlogEdit(row);
                 }}
-                className="h-5 w-5 text-green-500"
+                className="h-5 w-5 text-blue-500"
               />
             </button>
             <button>
@@ -291,7 +279,7 @@ const AllBlogAdminTable = () => {
 
   const handleGetBlogs = async (e) => {
     try {
-      const response = await fetch("/api/displayblogs", {
+      const response = await fetch("/api/admin/blogs/get-all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -313,25 +301,10 @@ const AllBlogAdminTable = () => {
     handleGetBlogs();
   }, []);
 
-  const handleBlogView = async (row) => {
-    // router.push(`/blog3/${row.original.slug}`);
-    const url = `/blogwn/${row.original.slug}`;
-    window.open(url, "_blank");
-  };
-
   const handleBlogLiveView = async (row) => {
-    const modifiedSlug = row.original.slug;
-    const parts = modifiedSlug.split("-");
-
-    if (parts[parts.length - 1] === "00000") {
-      parts.pop();
-    }
-
-    const originalSlug = parts.join("-");
-
-    // router.push(`/blog3/${originalSlug}`);
-
-    const url = `/blogwn/${originalSlug}`;
+    const blogSlug = row.original.slug;
+    const category = row.original.categoryName.toLowerCase();
+    const url = `/${category}/${blogSlug}`;
 
     window.open(url, "_blank");
   };
@@ -363,7 +336,7 @@ const AllBlogAdminTable = () => {
       formData.append("slug", slug);
       formData.append("blogLiveId", blogLiveId);
 
-      const response = await fetch("/api/deleteblog", {
+      const response = await fetch("/api/admin/blogs/delete", {
         method: "DELETE",
         body: formData,
       });

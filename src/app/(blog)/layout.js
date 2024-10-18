@@ -6,7 +6,6 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNav from "@/components/sidebar/SideNav";
 import AdminNavbar from "@/components/navbar/AdminNavbar";
-import { baseUrlDev } from "@/components/utils/CommonUrls";
 
 const montserrat = Montserrat({
   weight: ["300", "400"],
@@ -18,8 +17,8 @@ export default function BlogLayout({ children }) {
   useEffect(() => {
     const getfaviconimage = async () => {
       try {
-        const baseUrl = {baseUrlDev};
-        const response = await fetch(baseUrl + "/api/combinedapi", {
+        
+        const response = await fetch("/api/combinedapi", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
