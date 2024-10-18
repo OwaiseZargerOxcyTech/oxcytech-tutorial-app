@@ -53,7 +53,7 @@ const AddBlog = () => {
       console.error("Users Get operation error", error);
     }
   };
-  
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -168,7 +168,7 @@ const AddBlog = () => {
         formData.append("categoryId", selectedCategory);
         formData.append("categoryName", categoryName);
 
-        const response = await fetch("/api/admin/blogs/addblog", {
+        const response = await fetch("/api/admin/blogs/add", {
           method: "POST",
           body: formData,
           credentials: "include",
@@ -179,7 +179,7 @@ const AddBlog = () => {
         if (error) {
           console.log("Blog Added error:", error);
         }
-        
+
         // Reset form fields
         setTitle("");
         setDesc("");

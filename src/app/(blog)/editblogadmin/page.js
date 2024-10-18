@@ -1,9 +1,9 @@
 "use client";
-import { useState, Suspense, useEffect,  } from "react";
+import { useState, Suspense, useEffect } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { useSearchParams , useRouter} from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
 import DatePicker from "react-datepicker";
 
@@ -33,13 +33,13 @@ const EditBlog = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [publishType, setPublishType] = useState("now");
   const [publishDate, setPublishDate] = useState(new Date());
-  const [formSubmitted, setFormSubmitted] = useState(false); 
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const { data: session, status } = useSession();
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   const getBlogData = async () => {
     try {
       const encryptedID = searchParams.get("encryptedID");
@@ -48,7 +48,7 @@ const EditBlog = () => {
 
       const published = searchParams.get("published");
 
-      const response = await fetch("/api/fetchblog", {
+      const response = await fetch("/api/admin/blogs/get", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,8 +86,8 @@ const EditBlog = () => {
       console.error("Users Get operation error", error);
     }
   };
-  useEffect(() => {   
-    getBlogData(); 
+  useEffect(() => {
+    getBlogData();
     fetchUserData();
   }, []);
 
@@ -96,7 +96,7 @@ const EditBlog = () => {
       setTitle(blog.title);
       setDesc(blog.description);
       setContent(blog.content);
-      setImageName("");
+      setImageName(blog.title);
       setImage(blog.image);
       setSelectedId(blog.id);
       setAuthorId(blog.author_id);
@@ -174,7 +174,9 @@ const EditBlog = () => {
         return;
       }
 
-      const category = categories.find((category) => category.id === selectedCategory);
+      const category = categories.find(
+        (category) => category.id === selectedCategory
+      );
       const categoryName = category ? category.name : "";
 
       const formData = new FormData();
@@ -191,17 +193,17 @@ const EditBlog = () => {
       formData.append("categoryId", selectedCategory);
       formData.append("categoryName", categoryName);
 
-      const response = await fetch("/api/updateblog", {
+      const response = await fetch("/api/admin/blogs/update", {
         method: "PUT",
         body: formData,
       });
 
       const { error, result } = await response.json();
-      console.log(result)
+      console.log(result);
 
       if (error !== undefined) {
         console.log("Blog Updated error:", error);
-      }else{
+      } else {
         router.push("/allblogadmin");
       }
       setFormSubmitted(false);

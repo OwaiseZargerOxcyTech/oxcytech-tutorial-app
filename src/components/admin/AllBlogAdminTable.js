@@ -279,15 +279,12 @@ const AllBlogAdminTable = () => {
 
   const handleGetBlogs = async (e) => {
     try {
-      const response = await fetch(
-        "/api/admin/blogs/admin-table/display-blogs",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("/api/admin/blogs/get-all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const { error, result } = await response.json();
       // console.log("Fetched Blogs Data:", result);
@@ -339,7 +336,7 @@ const AllBlogAdminTable = () => {
       formData.append("slug", slug);
       formData.append("blogLiveId", blogLiveId);
 
-      const response = await fetch("/api/deleteblog", {
+      const response = await fetch("/api/admin/blogs/delete", {
         method: "DELETE",
         body: formData,
       });
