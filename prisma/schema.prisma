@@ -8,8 +8,8 @@ datasource db {
 }
 
 model navLogo {
-  id      Int           @id @default(autoincrement())
-  text    String 
+  id   Int    @id @default(autoincrement())
+  text String
 }
 
 model Usert {
@@ -123,22 +123,17 @@ model Category {
   blogs       Blogt[]     @relation("BlogCategory")
 }
 
-model navLogo {
-  id   Int    @id @default(autoincrement())
-  text String
-}
-
 model Footer {
-  id         Int         @id @default(autoincrement())
-  name       String
-  slug       String      @unique
-  isActive   Boolean
+  id       Int     @id @default(autoincrement())
+  name     String
+  slug     String  @unique
+  isActive Boolean
 }
 
 model SocialMedia {
-  id          Int         @id @default(autoincrement())
-  name        String
-  link        String      @unique
-  icon        String? 
-  isActive   Boolean
+  id       Int     @id @default(autoincrement())
+  name     String
+  link     String  @unique
+  icon     String?
+  isActive Boolean
 }
