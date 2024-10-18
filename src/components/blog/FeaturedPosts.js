@@ -72,7 +72,7 @@ export default function FeaturedPosts() {
           >
             <div className="grid grid-cols-3">
               <div className="col-span-1">
-                <div className="card-zoom bg-red-100 w-full h-[100px] rounded-lg">
+                <div className=" bg-red-100 w-full h-[100px] rounded-lg">
                   <div className="card-zoom-image">
                     {blog.image && imageData[blog.id] && (
                       <Link prefetch={false} href={`${blog.slug}`}>

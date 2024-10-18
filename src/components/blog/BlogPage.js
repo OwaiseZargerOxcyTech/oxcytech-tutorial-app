@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import BlogLists from "@/components/blog/BlogLists";
-import UserProfile from "@/components/blog/UserProfile";
-import FollowMe from "@/components/blog/FollowMe";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import Pagination from "../common/Pagination";
 import SingleBlogPage from "./SingleBlogPage";
@@ -46,8 +44,6 @@ const [currentPage, setCurrentPage] = useState(1);
             </div>
 
             <div className=" col-span-4 space-y-10">
-              <UserProfile />
-              <FollowMe />
               <FeaturedPosts />
             </div>
           </div>

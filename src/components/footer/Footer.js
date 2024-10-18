@@ -1,113 +1,140 @@
 import Link from "next/link";
-import FooterInputEmail from "./FooterInputEmail";
-import Copyright from "./Copyright";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
+  const [activeFooters, setActiveFooters] = useState([]);
+  const [activeAccounts, setActiveAccounts] = useState([]);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const currentItem = activeFooters.find((item) => item.href === pathname);
+    if (currentItem) {
+      // Reset current status
+      activeFooters.forEach((item) => (item.current = false));
+      currentItem.current = true;
+    }
+  }, [pathname, activeFooters]);
+
+  useEffect(() => {
+    const fetchActiveFooters = async () => {
+      try {
+        const response = await fetch("/api/footer");
+        if (!response.ok) {
+          throw new Error("Failed to fetch footer");
+        }
+        const data = await response.json();
+        const activeFooter = data
+          .filter((footer) => footer.isActive)
+          .map((footer) => ({
+            label: footer.name,
+            href: `/${footer.slug}`,
+            current: false,
+          }));
+        setActiveFooters(activeFooter);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchActiveFooters();
+  }, []);
+
+  useEffect(() => {
+    const currentItem = activeAccounts.find((item) => item.href === pathname);
+    if (currentItem) {
+      // Reset current status
+      activeAccounts.forEach((item) => (item.current = false));
+      currentItem.current = true;
+    }
+  }, [pathname, activeAccounts]);
+
+  useEffect(() => {
+    const fetchActiveAccounts = async () => {
+      try {
+        const response = await fetch("/api/socialmedia");
+        if (!response.ok) {
+          throw new Error("Failed to fetch accounts");
+        }
+        const data = await response.json();
+        const activeAccount = data
+          .filter((account) => account.isActive)
+          .map((account) => ({
+            label: account.name,
+            href: account.link,
+            current: false,
+            icon: account.icon,
+          }));
+        setActiveAccounts(activeAccount);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchActiveAccounts();
+  }, []);
+  const getIcon = (icon) => {
+    switch (icon.toLowerCase()) {
+      case "facebook":
+        return <FaFacebook size={24} />;
+      case "twitter":
+        return <FaTwitter size={24} />;
+      case "instagram":
+        return <FaInstagram size={24} />;
+        case "linkedin":
+        return <FaLinkedin size={24} />;
+        case "youtube":
+        return <FaYoutube size={24} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <>
-      {/* Footer container */}
-      <div className="bg-gray-100 bg-opacity-50 text-center lg:text-left">
-        {/* Main container div: holds the entire content of the footer */}
-        <div className="mx-auto max-w-2xl px-4 py-2 sm:px-2 sm:py-4 lg:max-w-7xl lg:px-4">
-          {/* <div className="py-10 text-center md:text-left">
-            <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4"> */}
-          {/* Link section */}
-          {/* <div className="space-y-6 ">
-                <h6 className="mb-4 text-gray-900 font-bold flex items-center justify-center md:justify-start space-x-3">
-                  <Link prefetch={false} href="/">
-                    Fb.
+    <footer className="bg-gray-800 text-gray-300 py-8">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-evenly">
+          {/* Footer Links */}
+          <div className="mb-6 md:mb-0">
+            <h3 className="text-white text-lg font-semibold mb-2">Links</h3>
+            <ul className="flex flex-col">
+              {activeFooters.map((item, index) => (
+                <li key={index} className="mr-6 mb-2">
+                  <Link href={item.href} className="hover:text-white">
+                    <b>{item.label}</b>
                   </Link>
-                  <Link prefetch={false} href="/">
-                    / Ig.
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social Media Accounts */}
+          <div>
+            <h3 className="text-white text-lg font-semibold mb-2">Follow Us</h3>
+            <ul className="flex flex-col">
+              {activeAccounts.map((item, index) => (
+                <li key={index} className="mr-6 mb-4 flex items-center">
+                  <Link
+                    href={item.href}
+                    target="_blank"
+                    className="flex items-center hover:text-white"
+                  >
+                    {getIcon(item.icon)}
+                    <b className="ml-2">{item.label}</b>
                   </Link>
-                  <Link prefetch={false} href="/">
-                    / Tw.
-                  </Link>
-                  <Link prefetch={false} href="/">
-                    / Be.
-                  </Link>
-                </h6>
-              </div> */}
-
-          {/* Branches section */}
-          {/* <div className="space-y-6">
-                <h6 className="mb-4 text-gray-900 text-sm font-bold flex justify-center  md:justify-start">
-                  Rotterdam
-                </h6>
-                <div className="mb-4 space-y-4">
-                  <div className="text-gray-500 ">
-                    <span className="text-gray-900 font-bold">
-                      Ohio Digital Media LTD
-                    </span>
-                    <div className="text-gray-500 text-sm leading-6">
-                      Graaf Florisstraat 22A,
-                      <br />
-                      3021 CH Rotterdam
-                      <br />
-                      Netherlands
-                    </div>
-                  </div>
-                </div>
-                <div className="mb-4 space-y-4">
-                  <h6 className="text-gray-900 text-sm font-bold">Barcelona</h6>
-                  <div className="text-gray-600">
-                    <span className="text-gray-900 font-bold">
-                      {" "}
-                      Ohio Digital LTD.
-                    </span>
-                    <div className="text-gray-500 text-sm leading-6">
-                      365 Gran Via de Corts
-                      <br />
-                      Catalanes, BA 08015
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
-          {/* inquiries & career section */}
-          {/* <div className="space-y-6">
-                <h6 className="mb-4 text-gray-900 text-sm font-bold flex justify-center md:justify-start">
-                  Work inquiries
-                </h6>
-                <div className="mb-4">
-                  <p className="text-gray-500 text-sm leading-6">
-                    Interested in working with us?
-                  </p>
-                  <h6 className="text-gray-900 font-bold hover:text-red-600 hover:underline">
-                    <Link prefetch={false} href="/">
-                      hello@clbthemes.com
-                    </Link>
-                  </h6>
-                </div>
-                <h6 className="mb-4 text-gray-900 text-sm flex justify-center font-semibold  md:justify-start">
-                  Career
-                </h6>
-                <div className="mb-4">
-                  <p className="text-gray-500 text-sm leading-6">
-                    Looking for a job opportunity? s
-                  </p>
-                  <h6 className="text-gray-900 font-bold hover:text-red-600 hover:underline">
-                    <Link prefetch={false} href="/">
-                      See open position
-                    </Link>
-                  </h6>
-                </div>
-              </div> */}
-
-          {/* Contact section */}
-          {/* <div>
-                <h6 className="mb-4 text-gray-900 text-sm flex justify-center font-semibold md:justify-start">
-                  Sign up for the newsletter
-                </h6>
-                <FooterInputEmail />
-              </div>
-            </div>
-          </div> */}
-
-          {/*Copyright section*/}
-          <Copyright />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </>
+
+      <div className="border-t border-gray-700 mt-8 pt-4 text-center">
+        <p className="text-sm">
+          © {new Date().getFullYear()} Your Company Name. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
   );
 }

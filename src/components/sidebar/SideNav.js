@@ -100,10 +100,50 @@ export default function SideNav() {
         )}
         {userRole === "admin" && (
           <Link
+            href="/addfooteradmin"
+            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
+          >
+            <span className="font-semibold">Add Footer</span>
+          </Link>
+        )}
+        {userRole === "admin" && (
+          <Link
+            href="/allfooteradmin"
+            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
+          >
+            <span className="font-semibold">All Footer</span>
+          </Link>
+        )}
+        {userRole === "admin" && (
+          <Link
+            href="/addsocialmediaadmin"
+            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
+          >
+            <span className="font-semibold">Add Social Media</span>
+          </Link>
+        )}
+        {userRole === "admin" && (
+          <Link
+            href="/allsocialmediaadmin"
+            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
+          >
+            <span className="font-semibold">All Social Media</span>
+          </Link>
+        )}
+        {userRole === "admin" && (
+          <Link
             href="/addfaviconadmin"
             className="block bg-[#8a8883] text-white  px-4 py-2 rounded"
           >
             <span className="font-semibold">Add Favicon</span>
+          </Link>
+        )}
+         {userRole === "admin" && (
+          <Link
+            href="/addlogotext"
+            className="block bg-[#8a8883] text-white px-4 py-2  rounded"
+          >
+            <span className="font-semibold">Add Logo Text</span>
           </Link>
         )}
         <button

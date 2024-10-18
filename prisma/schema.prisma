@@ -13,6 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model navLogo {
+  id      Int           @id @default(autoincrement())
+  text    String 
+}
+
 model Usert {
   id          Int             @id @default(autoincrement())
   email       String          @unique
@@ -123,4 +128,19 @@ model Category {
   isActive  Boolean  @default(true)
   blogs     Blogt[]         @relation("BlogCategory") // Relation to Blogt
   blogslive Bloglivet[]      @relation("BlogLiveCategory") // Relation to Bloglivet
+}
+
+model Footer {
+  id         Int         @id @default(autoincrement())
+  name       String
+  slug       String      @unique
+  isActive   Boolean
+}
+
+model SocialMedia {
+  id          Int         @id @default(autoincrement())
+  name        String
+  link        String      @unique
+  icon        String? 
+  isActive   Boolean
 }
