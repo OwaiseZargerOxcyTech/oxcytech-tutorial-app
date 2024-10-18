@@ -20,7 +20,6 @@ export async function PUT(req) {
     const bloglive_id = data.get("blogliveId");
     const category_id = parseInt(data.get("categoryId"));
 
-   
     let slug = title
       .toLowerCase()
       .replace(/[^\w\s-]/g, "")
@@ -28,7 +27,6 @@ export async function PUT(req) {
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-");
 
-    
     const blogData = {
       title,
       description,
@@ -40,11 +38,12 @@ export async function PUT(req) {
       bloglive_id,
       featuredpost,
       publishDate,
-      category_id
+      category_id,
+      id: selectedId,
     };
 
     if (published === "Y") {
-      await prisma.blogt.create({ data: {...blogData, published:"N"} });
+      await prisma.blogt.create({ data: { ...blogData, published: "N" } });
     } else {
       await prisma.blogt.update({
         where: { id: selectedId },
@@ -52,8 +51,10 @@ export async function PUT(req) {
       });
     }
 
-    return NextResponse.json({ result: "Blog updated successfully", blogData }, { status: 200 });
-
+    return NextResponse.json(
+      { result: "Blog updated successfully", blogData },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error during blog update:", error);
     return NextResponse.json(
