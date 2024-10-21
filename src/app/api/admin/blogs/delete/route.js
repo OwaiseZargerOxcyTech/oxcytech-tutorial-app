@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +9,7 @@ export async function DELETE(req) {
     const published = data.get("published");
     let selectedId = data.get("selectedId");
     selectedId = parseInt(selectedId);
-    
+
     if (published === "Y") {
       await prisma.bloglivet.delete({
         where: { id: selectedId },
@@ -20,8 +18,8 @@ export async function DELETE(req) {
       await prisma.blogt.delete({
         where: { id: selectedId },
       });
-    } 
-return NextResponse.json(
+    }
+    return NextResponse.json(
       { result: "blog deleted successfully" },
       { status: 200 }
     );

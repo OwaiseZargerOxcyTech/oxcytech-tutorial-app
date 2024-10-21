@@ -1,7 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +47,7 @@ export async function GET(req) {
 
     // Combine the results from Blogt and Bloglivet
     const combinedData = [
-      ...blogtData.map(blog => ({
+      ...blogtData.map((blog) => ({
         id: blog.id,
         title: blog.title,
         description: blog.description,
@@ -66,7 +64,7 @@ export async function GET(req) {
         categoryName: blog.category?.name || "Uncategorized",
         status: "pending", // Blogt entries are considered "pending"
       })),
-      ...bloglivetData.map(blog => ({
+      ...bloglivetData.map((blog) => ({
         id: blog.id,
         title: blog.title,
         description: blog.description,

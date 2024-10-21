@@ -103,7 +103,7 @@ const AllBlogAdminTable = () => {
             </button>
           ) : null,
       },
-
+      /**
       {
         accessorKey: "unapprove",
         header: "UNAPPROVAL",
@@ -123,6 +123,7 @@ const AllBlogAdminTable = () => {
             </button>
           ) : null,
       },
+       */
       {
         accessorKey: "action",
         header: "ACTIONS",
@@ -132,7 +133,9 @@ const AllBlogAdminTable = () => {
             <button className="mr-2">
               <EyeIcon
                 onClick={() => {
-                  handleBlogLiveView(row);
+                  row.original.published === "Y"
+                    ? handleBlogLiveView(row)
+                    : handleBlogView(row);
                 }}
                 className={
                   row.original.published === "Y"
@@ -224,7 +227,7 @@ const AllBlogAdminTable = () => {
       console.error("Approve blog operation error", error);
     }
   };
-
+  /*
   const handleBlogUnApproval = async (row) => {
     try {
       const response = await fetch("/api/combinedapi", {
@@ -276,6 +279,7 @@ const AllBlogAdminTable = () => {
       console.error("Cancel Delete Request operation error", error);
     }
   };
+*/
 
   const handleGetBlogs = async (e) => {
     try {
@@ -305,6 +309,12 @@ const AllBlogAdminTable = () => {
     const blogSlug = row.original.slug;
     const category = row.original.categoryName.toLowerCase();
     const url = `/${category}/${blogSlug}`;
+
+    window.open(url, "_blank");
+  };
+
+  const handleBlogView = async (row) => {
+    const url = `/unpublishedBlog/${row.original.id}`;
 
     window.open(url, "_blank");
   };

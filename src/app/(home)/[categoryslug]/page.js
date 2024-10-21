@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import BlogPage from "@/components/blog/BlogPage";
+import Loading from "../loading";
 
 const CategorySlug = ({ params }) => {
   const { categoryslug } = params;
@@ -31,7 +32,7 @@ const CategorySlug = ({ params }) => {
   }, [categoryslug]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -86,9 +84,6 @@ export async function GET(req) {
     );
   } catch (error) {
     console.error("Error fetching blogs:", error);
-    return NextResponse.json(
-      { error: "Failed to get blogs" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to get blogs" }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import BlogPage from "@/components/blog/BlogPage";
+import Loading from "../../loading";
 
 const SingleBlog = ({ params }) => {
   const { categoryslug, singleBlog } = params;
@@ -31,12 +32,16 @@ const SingleBlog = ({ params }) => {
   }, [categoryslug, singleBlog]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
     <main>
-      {blog ? <BlogPage data={blog} type="singleBlog" /> : <p>Blog not found</p>}
+      {blog ? (
+        <BlogPage data={blog} type="singleBlog" />
+      ) : (
+        <p>Blog not found</p>
+      )}
     </main>
   );
 };
