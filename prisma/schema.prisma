@@ -137,3 +137,8 @@ model SocialMedia {
   icon     String?
   isActive Boolean
 }
+
+model SideImg {
+  id       Int        @id @default(autoincrement())
+  image    String
+}

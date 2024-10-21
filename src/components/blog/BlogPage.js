@@ -4,6 +4,7 @@ import BlogLists from "@/components/blog/BlogLists";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import Pagination from "../common/Pagination";
 import SingleBlogPage from "./SingleBlogPage";
+import SidePage from "./SidePage";
 
 
 const BlogPage = ({data,type}) => {
@@ -44,6 +45,7 @@ const [currentPage, setCurrentPage] = useState(1);
             </div>
 
             <div className=" col-span-4 space-y-10">
+              <SidePage/>
               <FeaturedPosts />
             </div>
           </div>

@@ -146,6 +146,14 @@ export default function SideNav() {
             <span className="font-semibold">Add Logo Text</span>
           </Link>
         )}
+          {userRole === "admin" && (
+          <Link
+            href="/addsideimage"
+            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
+          >
+            <span className="font-semibold">Add Side Image</span>
+          </Link>
+        )}
         <button
           onClick={handleSignOut}
           className="w-full block bg-red-500 text-white px-4 py-2 rounded"
