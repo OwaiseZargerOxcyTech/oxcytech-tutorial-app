@@ -3,6 +3,7 @@ import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import SingleBlogPage from "@/components/blog/SingleBlogPage";
 import Pagination from "@/components/common/Pagination";
 import { useState, useEffect } from "react";
+import Loading from "../../loading";
 
 const UnpublishedBlogPage = ({ params }) => {
   const { id } = params;
@@ -50,7 +51,7 @@ const UnpublishedBlogPage = ({ params }) => {
     setCurrentPage(pageNo);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (

@@ -96,7 +96,7 @@ const EditBlog = () => {
       setTitle(blog.title);
       setDesc(blog.description);
       setContent(blog.content);
-      setImageName(blog.title);
+      setImageName(blog.imageName);
       setImage(blog.image);
       setSelectedId(blog.id);
       setAuthorId(blog.author_id);
