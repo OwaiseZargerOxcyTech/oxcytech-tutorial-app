@@ -20,7 +20,7 @@ const EditBlog = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedUserName, setSelectedUserName] = useState("");
@@ -183,7 +183,9 @@ const EditBlog = () => {
       formData.append("title", title);
       formData.append("description", desc);
       formData.append("content", content);
-      formData.append("image", image);
+      if (image) {
+        formData.append("image", image);
+      }
       formData.append("selectedId", selectedId);
       formData.append("published", searchParams.get("published"));
       formData.append("publishDate", publishDateValue.toISOString());
