@@ -19,7 +19,6 @@ export async function PUT(req) {
     const blogliveId = data.get("blogliveId");
     const categoryId = parseInt(data.get("categoryId"), 10);
 
-    // Generate slug from title
     let slug = title
       .toLowerCase()
       .replace(/[^\w\s-]/g, "")
