@@ -5,7 +5,6 @@ const Page = () => {
   const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   // Fetch the image from the server
   const fetchImage = async () => {
     try {
@@ -13,8 +12,7 @@ const Page = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch image");
       }
-        return response.json();
-
+      return response.json();
     } catch (error) {
       console.error("Error fetching image:", error);
     }
@@ -41,7 +39,7 @@ const Page = () => {
         throw new Error("Failed to save image");
       }
 
-      return response.json()
+      return response.json();
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -54,7 +52,7 @@ const Page = () => {
       <div className="card w-full bg-base-100 rounded-md">
         <form className="card-body" onSubmit={handleSubmit}>
           <h1 className="pt-4 text-center text-3xl font-semibold">
-            Add Logo Image
+            Add Side Image
           </h1>
 
           <label

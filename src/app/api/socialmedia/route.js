@@ -52,7 +52,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error adding account:", error);
     return NextResponse.json(
-      { error: "Failed to add account" },
+      { error: `${error}:Failed to add account` },
       { status: 500 }
     );
   }

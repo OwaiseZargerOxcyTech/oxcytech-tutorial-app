@@ -7,14 +7,16 @@ export async function generateMetadata({ params, searchParams }, parent) {
   
     // fetch data
     const response = await fetch(
-      `/api/blogs/get-blogs?category=${categoryslug}&blogSlug=${singleBlog}` 
+      `BaseURL/api/blogs/get-blogs?category=${categoryslug}&blogSlug=${singleBlog}` 
     );
-    //this wont work unless absolute path is provided with domain url for fetch
+    //this wont work unless absolute path or BaseURL is provided with domain url for fetch
     const data = await response.json(); //data.result has data
    
     return {
       //get data and add title description etc
-      title: product.title,
+      title: data.result.title,
+      description: data.result.description,
+      etc
     }
    
   */
