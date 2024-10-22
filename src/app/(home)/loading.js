@@ -4,7 +4,7 @@ const Loading = () => {
   return (
     <div className="flex flex-col sm:m-16 lg:flex-row gap-6 p-6 animate-pulse">
       {/* 70% section with horizontal cards */}
-      <div className="w-full lg:w-7/10 space-y-6">
+      <div className="w-full lg:w-2/3 space-y-6">
         {[...Array(3)].map((_, index) => (
           <div
             key={index}
@@ -26,13 +26,13 @@ const Loading = () => {
 
       {/* 30% section with vertical cards */}
       <div className="w-full lg:w-1/3 space-y-6">
-        {[...Array(3)].map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <div
             key={index}
             className="bg-white shadow-lg rounded-lg p-4 space-y-4"
           >
             {/* Image shimmer */}
-            <div className="h-32 bg-gray-300 rounded-md w-full"></div>
+            <div className="h-64 bg-gray-300 rounded-md w-full"></div>
 
             {/* Content shimmer */}
             <div className="flex flex-col space-y-2">

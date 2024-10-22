@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-function SidePage() {
+function ImageInSidebar() {
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
 
@@ -9,11 +9,11 @@ function SidePage() {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const response = await fetch("/api/sideimage");
+        const response = await fetch("/api/blogs/sideimage");
         const data = await response.json();
 
-        if (response.ok && data.image) {
-          setImageUrl(data.image);
+        if (response.ok && data.result.imageUrl) {
+          setImageUrl(data.result.imageUrl);
         } else {
           setError("Image not found or response not okay");
         }
@@ -27,16 +27,18 @@ function SidePage() {
   }, []);
   return (
     <div>
-      <Image
-        src={imageUrl}
-        alt="Side Image"
-        width={500}
-        height={500}
-        className="w-full h-auto rounded-md shadow"
-        crossOrigin="anonymous"
-      />
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          alt="Side Image"
+          width={500}
+          height={500}
+          className="w-full h-auto rounded-md shadow"
+          crossOrigin="anonymous"
+        />
+      )}
     </div>
   );
 }
 
-export default SidePage;
+export default ImageInSidebar;

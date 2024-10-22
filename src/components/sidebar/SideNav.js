@@ -107,26 +107,24 @@ export default function SideNav() {
   ];
 
   return (
-    <div>
-      <div className="space-y-2">
-        {navItems
-          .filter((item) => item.roles.includes(userRole))
-          .map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-            >
-              <span className="font-semibold">{item.label}</span>
-            </Link>
-          ))}
-        <button
-          onClick={handleSignOut}
-          className="w-full block bg-red-500 text-white px-4 py-2 rounded"
-        >
-          <span className="font-bold">Sign Out</span>
-        </button>
-      </div>
+    <div className="">
+      {navItems
+        .filter((item) => item.roles.includes(userRole))
+        .map((item, index) => (
+          <Link
+            key={index}
+            href={item.href}
+            className="block bg-[#3f4244] text-white mb-0.5 px-4 py-2 rounded-lg transition-transform hover:scale-105"
+          >
+            <span className="font-semibold">{item.label}</span>
+          </Link>
+        ))}
+      <button
+        onClick={handleSignOut}
+        className="w-full block bg-red-500 text-white px-4 py-2 rounded transition-transform hover:scale-110"
+      >
+        <span className="font-bold ">Sign Out</span>
+      </button>
     </div>
   );
 }

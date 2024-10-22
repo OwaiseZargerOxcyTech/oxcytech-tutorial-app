@@ -7,5 +7,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ["/unpublishedBlog/:path*"],
+  matcher: ["/unpublishedBlog/:path*", "/admin/:path*", "/authors/:path*"],
 };

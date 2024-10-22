@@ -4,6 +4,7 @@ import SingleBlogPage from "@/components/blog/SingleBlogPage";
 import Pagination from "@/components/common/Pagination";
 import { useState, useEffect } from "react";
 import Loading from "../../loading";
+import ImageInSidebar from "@/components/blog/ImageInSidebar";
 
 const UnpublishedBlogPage = ({ params }) => {
   const { id } = params;
@@ -72,6 +73,7 @@ const UnpublishedBlogPage = ({ params }) => {
             </div>
 
             <div className=" col-span-4 space-y-10">
+              <ImageInSidebar />
               <FeaturedPosts />
             </div>
           </div>
