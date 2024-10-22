@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
-import { staticNavigationItems } from "./navigationItems";
 import MobileNavbar from "./MobileNavbar";
 import Link from "next/link";
 import React from "react";
@@ -12,15 +11,15 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [activeCategories, setActiveCategories] = useState([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [logoText, setLogoText] = useState("");
 
   useEffect(() => {
-    const currentItem = [...staticNavigationItems, ...activeCategories].find(
+    const currentItem = activeCategories.find(
       (item) => item.href === pathname
     );
     if (currentItem) {
       // Reset current status
-      [...staticNavigationItems, ...activeCategories].forEach(
+      activeCategories.forEach(
         (item) => (item.current = false)
       );
       currentItem.current = true;
@@ -52,18 +51,27 @@ export default function Navbar() {
     fetchActiveCategories();
   }, []);
 
+  useEffect(() => {
+    const fetchLogoText = async () => {
+      try {
+        const response = await fetch("/api/navLogo");
+        if (!response.ok) {
+          throw new Error("Failed to fetch logo text");
+        }
+        const data = await response.json();
+        setLogoText(data.text); // Set the logo text to the fetched text
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchLogoText();
+  }, []);
+
   const toggleMenu = () => {
     setOpen(!open);
   };
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-  
 
-  const combinedNavigationItems = [
-    ...staticNavigationItems,
-    ...activeCategories,
-  ];
 
   const handleSignOut = () => {
     localStorage.removeItem("session");
@@ -100,9 +108,9 @@ export default function Navbar() {
                     </Disclosure.Button>
                   </div>
 
-                  <h1 className="text-gray-700 hover:text-blue-500 text-2xl font-bold ml-4 md:ml-0 cursor-pointer">
-                    Main
-                  </h1>
+                  <Link href="/" className="text-gray-700 text-2xl font-bold ml-4 md:ml-0 cursor-pointer">
+                  {logoText} 
+                  </Link>
                 </div>
 
                 <div className="flex items-center space-x-8">
@@ -118,7 +126,7 @@ export default function Navbar() {
                           alignItems: "center",
                         }}
                       >
-                        {combinedNavigationItems.map((item, index) => (
+                        {activeCategories.map((item, index) => (
                           <li
                             key={index}
                             style={{
@@ -152,7 +160,7 @@ export default function Navbar() {
 
               {/* Mobile Navbar */}
               <MobileNavbar
-                navigationItems={combinedNavigationItems}
+                navigationItems={activeCategories}
                 open={open}
                 toggleMenu={toggleMenu}
               />

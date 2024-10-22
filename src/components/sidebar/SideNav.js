@@ -9,7 +9,7 @@ export default function SideNav() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      setUserRole(session.user.name);
+      setUserRole(session.user.name); // Assuming 'name' contains the role
     }
   }, [session, status]);
 
@@ -17,102 +17,114 @@ export default function SideNav() {
     await signOut();
     window.location.href = "/login";
   };
+
+  const navItems = [
+    {
+      href: "/admin/authors/add",
+      label: "Add Author",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/authors/all",
+      label: "All Authors",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/blogs/add",
+      label: "Add Blog",
+      roles: ["admin", "employee"],
+    },
+    {
+      href: "/admin/blogs/all",
+      label: "All Blog",
+      roles: ["admin"],
+    },
+    {
+      href: "/authors/blogs/all",
+      label: "All Blog",
+      roles: ["employee"],
+    },
+    {
+      href: "/admin/tutorials/add",
+      label: "Add Tutorial",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/tutorials/all",
+      label: "All Tutorial",
+      roles: ["admin"],
+    },
+    {
+      href: "/authors/tutorials/all",
+      label: "All Tutorial",
+      roles: ["employee"],
+    },
+    {
+      href: "/admin/categories/add",
+      label: "Add Category",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/categories/all",
+      label: "All Categories",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/footer/add",
+      label: "Add Footer",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/footer/all",
+      label: "All Footer",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/social-media/add",
+      label: "Add Social Media",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/social-media/all",
+      label: "All Social Media",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/favicon/add",
+      label: "Add Favicon",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/logo/add",
+      label: "Add Logo Text",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/sidebar-image/add",
+      label: "Add Side Image",
+      roles: ["admin"],
+    },
+  ];
+
   return (
-    <div>
-      <div className="space-y-2 ">
-        {userRole === "admin" && (
+    <div className="">
+      {navItems
+        .filter((item) => item.roles.includes(userRole))
+        .map((item, index) => (
           <Link
-            href="/addemployeeadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2  rounded"
+            key={index}
+            href={item.href}
+            className="block bg-[#3f4244] text-white mb-0.5 px-4 py-2 rounded-lg transition-transform hover:scale-105"
           >
-            <span className="font-semibold">Add Author</span>
+            <span className="font-semibold">{item.label}</span>
           </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/allemployeeadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Authors</span>
-          </Link>
-        )}
-        <Link
-          href="/addblog"
-          className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-        >
-          <span className="font-semibold">Add Blog</span>
-        </Link>
-        {userRole === "admin" && (
-          <Link
-            href="/allblogadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Blog</span>
-          </Link>
-        )}
-        {userRole === "employee" && (
-          <Link
-            href="/allblogemployee"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Blog</span>
-          </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/addtutorialadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">Add Tutorial</span>
-          </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/alltutorialadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Tutorial</span>
-          </Link>
-        )}
-        {userRole === "employee" && (
-          <Link
-            href="/alltutorialemployee"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Tutorial</span>
-          </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/addcategoryadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">Add Category</span>
-          </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/allcategoryadmin"
-            className="block bg-[#8a8883] text-white px-4 py-2 rounded"
-          >
-            <span className="font-semibold">All Categories</span>
-          </Link>
-        )}
-        {userRole === "admin" && (
-          <Link
-            href="/addfaviconadmin"
-            className="block bg-[#8a8883] text-white  px-4 py-2 rounded"
-          >
-            <span className="font-semibold">Add Favicon</span>
-          </Link>
-        )}
-        <button
-          onClick={handleSignOut}
-          className="w-full block bg-red-500 text-white px-4 py-2 rounded"
-        >
-          <span className="font-bold">Sign Out</span>
-        </button>
-      </div>
+        ))}
+      <button
+        onClick={handleSignOut}
+        className="w-full block bg-red-500 text-white px-4 py-2 rounded transition-transform hover:scale-110"
+      >
+        <span className="font-bold ">Sign Out</span>
+      </button>
     </div>
   );
 }

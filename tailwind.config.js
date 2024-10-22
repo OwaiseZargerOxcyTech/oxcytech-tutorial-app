@@ -14,6 +14,9 @@ module.exports = {
       },
     },
   },
+  daisyui: {
+    themes: ["light"], // Forces DaisyUI to use only the light theme
+  },
   plugins: [
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/forms"),

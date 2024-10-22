@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 export default function FeaturedPosts() {
   const [blogData, setBlogData] = useState([]);
   const [imageData, setImageData] = useState({});
+  const [categories, setCategories] = useState({}); // State for categories
+
   useEffect(() => {
-    async function fetchData() {
+    // Fetch blog data
+    async function fetchBlogData() {
       try {
         const response = await fetch("/api/combinedapi", {
           method: "POST",
@@ -26,7 +29,26 @@ export default function FeaturedPosts() {
       }
     }
 
-    fetchData();
+    // Fetch category data
+    async function fetchCategoryData() {
+      try {
+        const response = await fetch("/api/categories", {
+          method: "GET",
+        });
+        const categoryResult = await response.json();
+        // Map category_id to category names
+        const categoryMap = categoryResult.reduce((map, category) => {
+          map[category.id] = category.slug;
+          return map;
+        }, {});
+        setCategories(categoryMap); // Store in state
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchBlogData();
+    fetchCategoryData();
   }, []);
 
   useEffect(() => {
@@ -59,6 +81,11 @@ export default function FeaturedPosts() {
     fetchImages();
   }, [blogData]);
 
+  // Get category name dynamically using category_id
+  const getCategoryName = (categoryId) => {
+    return categories[categoryId] || "uncategorized";
+  };
+
   return (
     <div className="space-y-10">
       <h1 className="text-gray-900 inline-block font-bold text-lg border-b-4 border-red-500">
@@ -72,10 +99,15 @@ export default function FeaturedPosts() {
           >
             <div className="grid grid-cols-3">
               <div className="col-span-1">
-                <div className="card-zoom bg-red-100 w-full h-[100px] rounded-lg">
+                <div className=" bg-red-100 w-full h-[100px] rounded-lg">
                   <div className="card-zoom-image">
                     {blog.image && imageData[blog.id] && (
-                      <Link prefetch={false} href={`${blog.slug}`}>
+                      <Link
+                        prefetch={false}
+                        href={`/${getCategoryName(blog.category_id)}/${
+                          blog.slug
+                        }`}
+                      >
                         <Image
                           src={imageData[blog.id]}
                           alt="img"
@@ -89,18 +121,14 @@ export default function FeaturedPosts() {
               </div>
               <div className="col-span-2">
                 <div className="flex flex-col justify-start items-start pl-2 space-y-4">
-                  <Link prefetch={false} href={`${blog.slug}`}>
+                  <Link
+                    prefetch={false}
+                    href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
+                  >
                     <h1 className="text-gray-800 hover:text-red-600 hover:underline text-md font-bold">
                       {blog.title}
                     </h1>
                   </Link>
-
-                  {/* <div className=" text-gray-600 text-sm font-normal">
-                    <i className="bi bi-person pr-1"></i>
-                    <Link prefetch={false} href={post.author.authorLink}>
-                      {post.author.firstName}
-                    </Link>
-                  </div> */}
                 </div>
               </div>
             </div>

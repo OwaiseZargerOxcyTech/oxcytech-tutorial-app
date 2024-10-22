@@ -66,27 +66,41 @@ const nextConfig = {
   },
 
   images: {
-    domains: [
-      "tailwindui.com",
-      "www.w3.org",
-      "images.unsplash.com",
-      "ohio.clbthemes.com",
-      "demo.rivaxstudio.com",
-    ],
-  },
-
-  swcMinify: false,
-
-  images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "tzafjtp2uu0yirew.public.blob.vercel-storage.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.w3.org",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "ohio.clbthemes.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "demo.rivaxstudio.com",
+        port: "",
+      },
     ],
   },
 
+  swcMinify: false,
   // experimental: {
   //   serverActions: true,
   // },

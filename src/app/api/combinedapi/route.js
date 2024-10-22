@@ -1,10 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 import md5 from "md5";
 import fetch from "node-fetch";
 import { put } from "@vercel/blob";
-
-const prisma = new PrismaClient();
 
 export const dynamic = "force-dynamic";
 
@@ -170,11 +168,10 @@ export async function POST(req, res) {
       const email = data.get("email");
       const password = data.get("password");
       const authorDetail = data.get("authorDetail");
-      
 
       const image = data.get("image");
       const updatedData = {};
-      
+
       const id = parseInt(selectedId, 10);
       if (isNaN(id)) {
         return NextResponse.json(
@@ -394,39 +391,64 @@ export async function POST(req, res) {
       }
 
       const publishDateObj = blog.publishDate;
-
       if (publishDateObj <= new Date()) {
-        const createdBlog = await prisma.bloglivet.create({
-          data: {
-            title: blog.title,
-            description: blog.description,
-            content: blog.content,
-            image: blog.image,
-            publishDate: publishDateObj,
-            slug: blog.slug,
-            published: "Y",
-            delete_request: blog.delete_request,
-            featuredpost: blog.featuredpost,
-            // Establishing the relation with Author
-            author: {
-              connect: { id: blog.author_id },
-            },
-            // Establishing the relation with Category
-            category: {
-              connect: { id: blog.category_id },
-            },
-          },
+        // Check if a blog with the same ID exists in bloglivet
+        const existingLiveBlog = await prisma.bloglivet.findUnique({
+          where: { id: blogId },
         });
 
-        if (createdBlog) {
-          await prisma.blogt.delete({ where: { id: blog.id } });
-          return NextResponse.json(
-            { result: "successfully approved and published blog" },
-            { status: 200 }
-          );
+        if (existingLiveBlog) {
+          // Update the existing bloglivet entry
+          await prisma.bloglivet.update({
+            where: { id: blogId },
+            data: {
+              title: blog.title,
+              description: blog.description,
+              content: blog.content,
+              image: blog.image,
+              publishDate: publishDateObj,
+              slug: blog.slug,
+              published: "Y",
+              delete_request: blog.delete_request,
+              featuredpost: blog.featuredpost,
+              author: {
+                connect: { id: blog.author_id },
+              },
+              category: {
+                connect: { id: blog.category_id },
+              },
+            },
+          });
         } else {
-          throw new Error("Failed to create live blog entry");
+          // Create a new entry in bloglivet
+          await prisma.bloglivet.create({
+            data: {
+              title: blog.title,
+              description: blog.description,
+              content: blog.content,
+              image: blog.image,
+              publishDate: publishDateObj,
+              slug: blog.slug,
+              published: "Y",
+              delete_request: blog.delete_request,
+              featuredpost: blog.featuredpost,
+              author: {
+                connect: { id: blog.author_id },
+              },
+              category: {
+                connect: { id: blog.category_id },
+              },
+            },
+          });
         }
+
+        // Delete the blog from blogt
+        await prisma.blogt.delete({ where: { id: blog.id } });
+
+        return NextResponse.json(
+          { result: "Successfully approved and published blog" },
+          { status: 200 }
+        );
       } else {
         return NextResponse.json(
           { result: "Blog cannot be published yet" },
@@ -521,6 +543,23 @@ export async function POST(req, res) {
         where: {
           featuredpost: "yes",
         },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 5,
+      });
+
+      return NextResponse.json({ result: latestBlogs }, { status: 200 });
+    } catch (error) {
+      console.error("Error during getting featured blogs data:", error);
+      return NextResponse.json(
+        { error: "Failed to get featured blogs data" },
+        { status: 500 }
+      );
+    }
+  } else if (apiName === "getlatestblogs") {
+    try {
+      const latestBlogs = await prisma.bloglivet.findMany({
         orderBy: {
           createdAt: "desc",
         },

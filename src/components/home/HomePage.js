@@ -3,17 +3,13 @@ import WhatWeDo from "@/components/home/WhatWeDo";
 import Capabilities from "@/components/home/Capabilities";
 import Showcase from "@/components/home/Showcase";
 import WebAndMobile from "@/components/home/WebAndMobile";
-import Testimonial from "@/components/home/Testimonial";
 import Careers from "@/components/home/Careers";
 import CapabilitiesSecondary from "@/components/home/CapabilitiesSecondary";
 import PlayVideo from "@/components/home/PlayVideo";
 import Services from "@/components/home/Services";
-import Breadcrumbs from "../common/Breadcrumbs";
-import TestimonialSecondary from "@/components/home/TestimonialSecondary";
 import Awards from "@/components/home/Awards";
 import Collaborate from "@/components/home/Collaborate";
 import MapAndAddress from "../common/MapAndAddress";
-import Clients from "./Clients";
 
 const HomePage = () => {
  
@@ -35,16 +31,6 @@ const HomePage = () => {
         <WebAndMobile />
       </section>
 
-      {/* Section 4: Clients */}
-      <section>
-        <Clients />
-      </section>
-
-      {/* Section 5: Testimonials */}
-      <section>
-        <Testimonial />
-      </section>
-
       {/* Section 6: Map and Address */}
       <section>
         <MapAndAddress />
@@ -53,11 +39,6 @@ const HomePage = () => {
       {/* Section 7: Careers */}
       <section>
         <Careers />
-      </section>
-
-      {/* Section 8: Secondary Testimonial */}
-      <section className="bg-[#1a191b]">
-        <TestimonialSecondary />
       </section>
 
       {/* Section 9: Awards */}
@@ -72,7 +53,6 @@ const HomePage = () => {
 
       {/* Section 11: Services */}
       <section>
-        <Breadcrumbs />
         <Services />
       </section>
 

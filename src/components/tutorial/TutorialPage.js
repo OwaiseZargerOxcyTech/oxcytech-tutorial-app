@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 // import { blogData } from "@/components/blog1/blogData";
-import UserProfile from "@/components/blog/UserProfile";
-import FollowMe from "@/components/blog/FollowMe";
+import UserProfile from "@/components/home/oldAndRemovedFromHomePage/UserProfile";
+import FollowMe from "@/components/home/oldAndRemovedFromHomePage/FollowMe";
 import FeaturedPosts from "@/components/blog/FeaturedPosts";
 import Link from "next/link";
 import Navbar from "../navbar/Navbar";

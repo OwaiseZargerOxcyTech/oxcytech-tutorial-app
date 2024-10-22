@@ -1,7 +1,7 @@
-import Career from "@/components/contact/Career";
-import MapAndAddress1 from "../../../components/common/MapAndAddress";
-import Career1 from "@/components/contact/Career1";
-import Hero1 from "@/components/contact/Hero";
+import MapAndAddress from "@/components/common/MapAndAddress";
+import Career from "./_components/Career";
+import CareerSecondary from "./_components/CareerSecondary";
+import Hero from "./_components/Hero";
 
 export const metadata = {
   metadataBase: new URL("https://tutorials-fawn-omega.vercel.app/"),
@@ -74,9 +74,9 @@ export default function Page() {
         <Career />
       </main>
       <main>
-        <Hero1 />
-        <MapAndAddress1 />
-        <Career1 />
+        <Hero />
+        <MapAndAddress />
+        <CareerSecondary />
       </main>
     </>
   );
