@@ -45,11 +45,11 @@ export async function DELETE(req, { params }) {
 export async function PUT(req, { params }) {
   const { id } = params;
   try {
-    const { name, link, icon, isActive } = await req.json();
+    const { name, link, isActive } = await req.json();
 
     const updatedAccount = await prisma.socialMedia.update({
       where: { id: parseInt(id) },
-      data: { name, link, icon, isActive },
+      data: { name, link, isActive },
     });
     return NextResponse.json(updatedAccount, { status: 200 });
   } catch (error) {

@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
-import CommonTable from "../common/CommonTable";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import CommonTable from "@/components/common/CommonTable";
 
-const AllTutorialEmployeeTable = () => {
+const AllTutorialsTable = () => {
   const [tutorialsData, setTutorialsData] = useState([]);
 
   const { data: session, status } = useSession();
@@ -79,4 +78,4 @@ const AllTutorialEmployeeTable = () => {
   );
 };
 
-export default AllTutorialEmployeeTable;
+export default AllTutorialsTable;

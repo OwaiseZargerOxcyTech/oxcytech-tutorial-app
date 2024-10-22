@@ -8,7 +8,6 @@ const EditSocialmedia = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
-  const [icon, setIcon] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +23,6 @@ const EditSocialmedia = () => {
         const data = await response.json();
         setName(data.name);
         setLink(data.link);
-        setIcon(data.icon);
         setIsActive(data.isActive);
       } catch (err) {
         setError(err.message);
@@ -51,7 +49,6 @@ const EditSocialmedia = () => {
         body: JSON.stringify({
           name,
           link,
-          icon,
           isActive,
         }),
       });
@@ -114,24 +111,6 @@ const EditSocialmedia = () => {
               />
             </div>
 
-            <div className="mt-6">
-              <label htmlFor="icon" className="text-gray-700">
-                Add Icon Name
-              </label>
-              <input
-                type="text"
-                id="icon"
-                name="icon"
-                value={icon}
-                onChange={(e) => setIcon(e.target.value)}
-                className="mt-2 p-2 border border-gray-300 rounded w-full"
-                required
-              />
-            </div>
-            <p>
-              you can add Icon names : instagram, facebook, twitter, linkedin,
-              youtube.
-            </p>
             <div className="flex justify-end">
               <button
                 type="submit"

@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import AllTutorialEmployeeTable from "@/components/employee/AllTutorialEmployeeTable";
+import AllTutorialsTable from "../_components/AllTutorialsTable";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -14,7 +14,7 @@ export default function Page() {
   }
   return (
     <div>
-      <AllTutorialEmployeeTable />
+      <AllTutorialsTable />
     </div>
   );
 }

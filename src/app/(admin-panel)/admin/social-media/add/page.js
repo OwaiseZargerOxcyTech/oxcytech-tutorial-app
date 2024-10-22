@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 const Page = () => {
   const [socialmedia, setSocialmedia] = useState("");
   const [link, setLink] = useState("");
-  const [icon, setIcon] = useState("");
   const [formSubmitted, setFormSubmitted] = useState("");
 
   const { data: session, status } = useSession();
@@ -32,7 +31,6 @@ const Page = () => {
         body: JSON.stringify({
           name: socialmedia,
           link,
-          icon,
           isActive,
         }),
       });
@@ -41,7 +39,6 @@ const Page = () => {
         setFormSubmitted(true);
         setSocialmedia("");
         setLink("");
-        setIcon("");
       } else {
         console.error("Failed to add account");
       }
@@ -96,25 +93,6 @@ const Page = () => {
                 required
               />
             </div>
-
-            <div className="mt-6">
-              <label htmlFor="icon" className="text-gray-700">
-                Add Icon Name
-              </label>
-              <input
-                type="text"
-                id="icon"
-                name="icon"
-                value={icon}
-                onChange={(e) => setIcon(e.target.value)}
-                className="mt-2 p-2 border border-gray-300 rounded w-full"
-                required
-              />
-            </div>
-            <p>
-              you can add Icon names : instagram, facebook, twitter, linkedin,
-              youtube.
-            </p>
 
             <div className="flex justify-end">
               <button

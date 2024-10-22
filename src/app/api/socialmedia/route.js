@@ -18,7 +18,7 @@ export async function GET() {
 // POST Handler: Add New Accounts
 export async function POST(request) {
   try {
-    const { name, isActive, link, icon } = await request.json();
+    const { name, isActive, link } = await request.json();
 
     if (!name || !link) {
       return NextResponse.json(
@@ -43,7 +43,6 @@ export async function POST(request) {
       data: {
         name,
         link,
-        icon,
         isActive,
       },
     });

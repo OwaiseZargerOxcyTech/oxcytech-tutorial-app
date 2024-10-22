@@ -1,17 +1,17 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
-import CommonTable from "../common/CommonTable";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
+import CommonTable from "@/components/common/CommonTable";
 
 const encryptID = (id, secretKey) => {
   return CryptoJS.AES.encrypt(id.toString(), secretKey).toString();
 };
 
-const AllBlogEmployeeTable = () => {
+const AllBlogsTable = () => {
   const [blogsData, setBlogsData] = useState([]);
   const [previousimage, setPreviousImage] = useState();
   const [selectedId, setSelectedId] = useState();
@@ -233,4 +233,4 @@ const AllBlogEmployeeTable = () => {
   );
 };
 
-export default AllBlogEmployeeTable;
+export default AllBlogsTable;

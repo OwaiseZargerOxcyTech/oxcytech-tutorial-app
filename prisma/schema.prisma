@@ -134,11 +134,10 @@ model SocialMedia {
   id       Int     @id @default(autoincrement())
   name     String
   link     String  @unique
-  icon     String?
   isActive Boolean
 }
 
 model SideImg {
-  id       Int        @id @default(autoincrement())
-  image    String
+  id    Int    @id @default(autoincrement())
+  image String
 }

@@ -1,6 +1,6 @@
 "use client";
-import AllBlogEmployeeTable from "@/components/employee/AllBlogEmployeeTable";
 import { useSession } from "next-auth/react";
+import AllBlogsTable from "../_components/AllBlogsTable";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -8,7 +8,7 @@ export default function Page() {
   if (status === "loading") {
     return <div></div>;
   }
-  console.log(session)
+  console.log(session);
 
   if (!session || session.user.name !== "employee") {
     return <div>Access Denied</div>;
@@ -16,7 +16,7 @@ export default function Page() {
   //merge conflict
   return (
     <div>
-      <AllBlogEmployeeTable />
+      <AllBlogsTable />
     </div>
   );
 }

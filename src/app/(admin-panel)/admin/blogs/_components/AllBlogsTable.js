@@ -313,7 +313,7 @@ const AllBlogsTable = () => {
   };
 
   const handleBlogView = async (row) => {
-    const url = `/unpublishedBlog/${row.original.id}`;
+    const url = `/unpublished-blog/${row.original.id}`;
 
     window.open(url, "_blank");
   };
