@@ -3,13 +3,13 @@ import { useState, Suspense } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const DynamicSunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-const AddSubTopic = () => {
+const AddSubTopic = ({ params }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
@@ -19,7 +19,6 @@ const AddSubTopic = () => {
 
   const { data: session, status } = useSession();
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   if (status === "loading") {
@@ -42,7 +41,7 @@ const AddSubTopic = () => {
       setTimeout(async () => {
         setPublished("N");
 
-        const topicslug = searchParams.get("topicslug");
+        const { topicslug } = params;
 
         const response = await fetch("/api/combinedapi", {
           method: "POST",
@@ -182,10 +181,10 @@ const AddSubTopic = () => {
   );
 };
 
-export default function Page() {
+export default function Page({ params }) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <AddSubTopic />
+      <AddSubTopic params={params} />
     </Suspense>
   );
 }

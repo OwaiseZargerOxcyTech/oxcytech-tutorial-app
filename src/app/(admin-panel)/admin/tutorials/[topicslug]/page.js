@@ -5,7 +5,6 @@ import AllSubTopicsTutorialTable from "../_components/AllSubTopicsTutorialTable"
 
 export default function SlugPage({ params }) {
   const { topicslug } = params;
-
   const { data: session, status } = useSession();
 
   const router = useRouter();
@@ -19,7 +18,7 @@ export default function SlugPage({ params }) {
   }
 
   const handleAddSubTopic = () => {
-    router.push(`/admin/tutorials/addsubtopic?topicslug=${topicslug}`);
+    router.push(`/admin/tutorials/${topicslug}/addsubtopic/`);
   };
   return (
     <>
