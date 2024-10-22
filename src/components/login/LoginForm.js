@@ -26,7 +26,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (status === "authenticated" && !loginError) {
       if (session && session.user && session.user.name === "admin") {
-        router.push("/adminform");
+        router.push("/admin/adminform");
       } else if (session && session.user && session.user.name === "employee") {
         router.push("/authors/blogs/all");
       } else {

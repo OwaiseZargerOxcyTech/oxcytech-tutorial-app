@@ -115,7 +115,7 @@ const AllBlogEmployeeTable = () => {
 
   const handleGetBlogs = async (e) => {
     try {
-      const response = await fetch("/api/getblogsforemployee", {
+      const response = await fetch("/api/authors/blogs/get-all", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
