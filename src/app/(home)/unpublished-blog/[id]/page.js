@@ -5,6 +5,7 @@ import Pagination from "@/components/common/Pagination";
 import { useState, useEffect } from "react";
 import Loading from "../../loading";
 import ImageInSidebar from "@/components/blog/ImageInSidebar";
+import LatestPosts from "@/components/blog/LatestPosts";
 
 const UnpublishedBlogPage = ({ params }) => {
   const { id } = params;
@@ -75,6 +76,7 @@ const UnpublishedBlogPage = ({ params }) => {
             <div className=" col-span-4 space-y-10">
               <ImageInSidebar />
               <FeaturedPosts />
+              <LatestPosts />
             </div>
           </div>
         </div>

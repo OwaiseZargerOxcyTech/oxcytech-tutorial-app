@@ -557,6 +557,23 @@ export async function POST(req, res) {
         { status: 500 }
       );
     }
+  } else if (apiName === "getlatestblogs") {
+    try {
+      const latestBlogs = await prisma.bloglivet.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 5,
+      });
+
+      return NextResponse.json({ result: latestBlogs }, { status: 200 });
+    } catch (error) {
+      console.error("Error during getting featured blogs data:", error);
+      return NextResponse.json(
+        { error: "Failed to get featured blogs data" },
+        { status: 500 }
+      );
+    }
   } else if (apiName === "addtutorial") {
     try {
       const { title, authorId, is_active } = body;
