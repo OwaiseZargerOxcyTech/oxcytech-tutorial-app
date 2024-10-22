@@ -12,7 +12,7 @@ export async function POST(request) {
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
-
+    console.log("this is the image post api")
     const blobResponse = await put('your-image-path', image, {
       access: 'public',
     });
