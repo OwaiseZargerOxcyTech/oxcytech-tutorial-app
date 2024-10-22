@@ -274,7 +274,7 @@ const AllSubTopicsTutorialTable = ({ params }) => {
     const encodedID = encodeURIComponent(encryptedID);
 
     router.push(
-      `/editsubtopic?encryptedID=${encodedID}&published=${row.original.published}&topicslug=${topicslug}`
+      `/admin/tutorials/${topicslug}/editsubtopic?encryptedID=${encodedID}&published=${row.original.published}`
     );
   };
 

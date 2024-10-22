@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CryptoJS from "crypto-js";
 
 const DynamicSunEditor = dynamic(() => import("suneditor-react"), {
@@ -16,7 +16,7 @@ const decryptID = (encryptedID, secretKey) => {
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
-const EditSubTopic = () => {
+const EditSubtopic = ({ params }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
@@ -27,8 +27,10 @@ const EditSubTopic = () => {
   const [preference, setPreference] = useState("");
 
   const { data: session, status } = useSession();
-
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { topicslug } = params;
+  console.log(params);
 
   useEffect(() => {
     const getSubTutorialData = async () => {
@@ -110,7 +112,7 @@ const EditSubTopic = () => {
           published: searchParams.get("published"),
           subTopicLiveId,
           preference,
-          topicslug: searchParams.get("topicslug"),
+          topicslug,
         }),
       });
 
@@ -120,13 +122,9 @@ const EditSubTopic = () => {
         console.log("Subtopic Updated error:", error);
       }
       if (session.user.name === "admin") {
-        window.location.href = `/tutorialadmin/${searchParams.get(
-          "topicslug"
-        )}`;
+        router.push(`/admin/tutorials/${topicslug}`);
       } else {
-        window.location.href = `/tutorialemployee/${searchParams.get(
-          "topicslug"
-        )}`;
+        window.location.href = `/tutorialemployee/`;
       }
     } catch (error) {
       console.error("SubTopic Update operation error", error);
@@ -244,11 +242,4 @@ const EditSubTopic = () => {
     </>
   );
 };
-
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <EditSubTopic />
-    </Suspense>
-  );
-}
+export default EditSubtopic;

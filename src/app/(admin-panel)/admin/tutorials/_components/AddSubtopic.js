@@ -1,5 +1,5 @@
 "use client";
-import { useState, Suspense } from "react";
+import { useState } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
@@ -9,7 +9,7 @@ const DynamicSunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-const AddSubTopic = ({ params }) => {
+const AddSubtopic = ({ params }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [content, setContent] = useState("");
@@ -180,11 +180,4 @@ const AddSubTopic = ({ params }) => {
     </>
   );
 };
-
-export default function Page({ params }) {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AddSubTopic params={params} />
-    </Suspense>
-  );
-}
+export default AddSubtopic;
