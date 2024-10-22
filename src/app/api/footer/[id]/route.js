@@ -1,23 +1,24 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 
 // Handling GET request for a specific footer
 export async function GET(request, { params }) {
-  const { id } = params; 
+  const { id } = params;
   try {
     const footer = await prisma.footer.findUnique({
-      where: { id: Number(id) }, 
+      where: { id: Number(id) },
     });
-    
+
     if (!footer) {
-      return NextResponse.json({ error: 'footer not found' }, { status: 404 });
+      return NextResponse.json({ error: "footer not found" }, { status: 404 });
     }
 
     return NextResponse.json(footer);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch footer' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch footer" },
+      { status: 500 }
+    );
   }
 }
 

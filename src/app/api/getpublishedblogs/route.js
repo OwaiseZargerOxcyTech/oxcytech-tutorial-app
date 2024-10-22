@@ -1,21 +1,18 @@
-
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prisma";
 
 export const dynamic = "force-dynamic";
 
 // GET Handler: Fetch Published Blogs
 export async function GET(req) {
   const url = new URL(req.url);
-  const category = url.searchParams.get("category"); 
+  const category = url.searchParams.get("category");
 
   try {
     const blogs = await prisma.bloglivet.findMany({
       where: {
         published: "Y",
-        ...(category && { category: { slug: category } })
+        ...(category && { category: { slug: category } }),
       },
       include: {
         author: {
@@ -23,7 +20,8 @@ export async function GET(req) {
             authorName: true,
           },
         },
-        category: { // Include category details
+        category: {
+          // Include category details
           select: {
             name: true, // Assuming 'name' is the field for category name
           },
@@ -31,10 +29,10 @@ export async function GET(req) {
       },
     });
 
-    const processedBlogs = blogs.map(blog => ({
+    const processedBlogs = blogs.map((blog) => ({
       ...blog,
       authorName: blog.author?.authorName || "Unknown",
-      categoryName: blog.category?.name || "Uncategorized", 
+      categoryName: blog.category?.name || "Uncategorized",
     }));
 
     return NextResponse.json({ result: processedBlogs }, { status: 200 });
@@ -46,4 +44,3 @@ export async function GET(req) {
     );
   }
 }
-

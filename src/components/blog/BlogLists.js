@@ -1,41 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-// import { useEffect, useState } from "react";
 
 export default function BlogLists({ blogData }) {
-  // const [imageData, setImageData] = useState({});
-
-  // useEffect(() => {
-  //   async function fetchImages() {
-  //     const imageMap = {};
-  //     for (const blog of blogData) {
-  //       if (blog.image) {
-  //         try {
-  //           const response = await fetch(blog.image);
-  //           if (response.ok) {
-  //             const blob = await response.blob();
-  //             const imageUrl = URL.createObjectURL(blob);
-  //             imageMap[blog.id] = imageUrl;
-  //           } else {
-  //             console.error(
-  //               `Failed to fetch image for blog with ID ${blog.id}`
-  //             );
-  //           }
-  //         } catch (error) {
-  //           console.error(
-  //             `Error fetching image for blog with ID ${blog.id}:`,
-  //             error
-  //           );
-  //         }
-  //       }
-  //     }
-  //     setImageData(imageMap);
-  //   }
-
-  //   fetchImages();
-  // }, [blogData]);
-  console.log(blogData);
   return (
     <div className=" bg-white border border-gray-200">
       {blogData &&

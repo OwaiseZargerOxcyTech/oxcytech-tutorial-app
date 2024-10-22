@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import { useEffect, useState } from "react";
+import AuthProviders from "@/components/providers/AuthProviders";
 
 const montserrat = Montserrat({
   weight: ["300", "400"],
@@ -16,7 +17,6 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     const getfaviconimage = async () => {
       try {
-        
         const response = await fetch("/api/combinedapi", {
           method: "POST",
           headers: {
@@ -39,11 +39,12 @@ export default function RootLayout({ children }) {
         <link rel="icon" href={faviconImageUrl} sizes="any" />
       </head>
       <body className={montserrat.className} suppressHydrationWarning={true}>
+        <AuthProviders>
           <Navbar />
           <section>{children}</section>
-          <Footer />   
+          <Footer />
+        </AuthProviders>
       </body>
-      
     </html>
   );
 }

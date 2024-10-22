@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -20,13 +21,14 @@ const LoginForm = () => {
   };
 
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated" && !loginError) {
       if (session && session.user && session.user.name === "admin") {
-        window.location.href = "/adminform";
+        router.push("/adminform");
       } else if (session && session.user && session.user.name === "employee") {
-        window.location.href = "/allblogemployee";
+        router.push("/allblogemployee");
       } else {
         console.error("Invalid user type");
       }
@@ -44,7 +46,7 @@ const LoginForm = () => {
         setToastMessage("Please solve the CAPTCHA to proceed.");
         setTimeout(async () => {
           setFormSubmitted(false);
-          window.location.href = "/login";
+          router.push("/login");
         }, 3000);
 
         throw new Error("Wrong Captcha...");
@@ -67,7 +69,7 @@ const LoginForm = () => {
         setInvalidUser("true");
         setTimeout(async () => {
           setFormSubmitted(false);
-          window.location.href = "/login";
+          router.push("/login");
           setInvalidUser("false");
         }, 3000);
 

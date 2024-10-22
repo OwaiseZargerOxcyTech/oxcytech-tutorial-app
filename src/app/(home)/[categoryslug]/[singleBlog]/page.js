@@ -1,44 +1,34 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import BlogPage from "@/components/blog/BlogPage";
+import SingleBlog from "../category-components/SingleBlog";
 
-const SingleBlog = ({ params }) => {
-  const { categoryslug, singleBlog } = params;
-  const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true);
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const { singleBlog } = params;
+  /* this is for after production
+  
+    // fetch data
+    const response = await fetch(
+      `/api/blogs/get-blogs?category=${categoryslug}&blogSlug=${singleBlog}` 
+    );
+    //this wont work unless absolute path is provided with domain url for fetch
+    const data = await response.json(); //data.result has data
+   
+    return {
+      //get data and add title description etc
+      title: product.title,
+    }
+   
+  */
+  return {
+    title: singleBlog,
+  };
+}
 
-  useEffect(() => {
-    const fetchSingleBlog = async () => {
-      try {
-        const response = await fetch(
-          `/api/blogs/get-blogs?category=${categoryslug}&blogSlug=${singleBlog}`
-        );
-        const data = await response.json();
-
-        if (response.ok) {
-          setBlog(data.result);
-        } else {
-          console.error("Error fetching blog:", data.error);
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSingleBlog();
-  }, [categoryslug, singleBlog]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+const SingleBlogPage = ({ params }) => {
   return (
     <main>
-      {blog ? <BlogPage data={blog} type="singleBlog" /> : <p>Blog not found</p>}
+      <SingleBlog params={params} />
     </main>
   );
 };
 
-export default SingleBlog;
+export default SingleBlogPage;

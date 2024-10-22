@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
+import { prisma } from "@/utils/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +19,6 @@ export async function POST(req) {
 
     let newBlog;
     let slug;
-
-    const prisma = new PrismaClient();
 
     // Generate slug from title
     if (title) {

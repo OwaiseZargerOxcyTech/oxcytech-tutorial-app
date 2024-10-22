@@ -1,23 +1,24 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 
 // Handling GET request for a specific Account
 export async function GET(request, { params }) {
-  const { id } = params; 
+  const { id } = params;
   try {
     const account = await prisma.socialMedia.findUnique({
-      where: { id: Number(id) }, 
+      where: { id: Number(id) },
     });
-    
+
     if (!account) {
-      return NextResponse.json({ error: 'account not found' }, { status: 404 });
+      return NextResponse.json({ error: "account not found" }, { status: 404 });
     }
 
     return NextResponse.json(account);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch account' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch account" },
+      { status: 500 }
+    );
   }
 }
 
@@ -45,7 +46,7 @@ export async function PUT(req, { params }) {
   const { id } = params;
   try {
     const { name, link, icon, isActive } = await req.json();
-    
+
     const updatedAccount = await prisma.socialMedia.update({
       where: { id: parseInt(id) },
       data: { name, link, icon, isActive },

@@ -1,10 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 import md5 from "md5";
 import fetch from "node-fetch";
 import { put } from "@vercel/blob";
-
-const prisma = new PrismaClient();
 
 export const dynamic = "force-dynamic";
 
