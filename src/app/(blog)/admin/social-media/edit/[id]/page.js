@@ -60,7 +60,7 @@ const EditSocialmedia = () => {
         throw new Error("Failed to update account");
       }
 
-      router.push("/allsocialmediaadmin");
+      router.push("/admin/social-media/all");
     } catch (err) {
       setError(err.message);
       setFormSubmitted(false);
@@ -128,7 +128,10 @@ const EditSocialmedia = () => {
                 required
               />
             </div>
-            <p>you can add Icon names : instagram, facebook, twitter, linkedin, youtube.</p>
+            <p>
+              you can add Icon names : instagram, facebook, twitter, linkedin,
+              youtube.
+            </p>
             <div className="flex justify-end">
               <button
                 type="submit"

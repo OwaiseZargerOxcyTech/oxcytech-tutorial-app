@@ -6,14 +6,12 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 const AllCategoryAdminTable = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-
 
   const columns = useMemo(
     () => [
@@ -25,7 +23,9 @@ const AllCategoryAdminTable = () => {
           <input
             type="checkbox"
             checked={row.original.isActive}
-            onChange={() => handleToggleActive(row.original.id, row.original.isActive)}
+            onChange={() =>
+              handleToggleActive(row.original.id, row.original.isActive)
+            }
           />
         ),
       },
@@ -43,11 +43,8 @@ const AllCategoryAdminTable = () => {
             .replace(/-+/g, "-");
 
           return (
-            <div style={{ whiteSpace: "normal", wordBreak: "break-word",  }}>
-              <Link
-                href={`/categoryadmin/${slug}`}
-                className="text-black-500 "
-              >
+            <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+              <Link href={`/categoryadmin/${slug}`} className="text-black-500 ">
                 {cell.getValue()}
               </Link>
             </div>
@@ -60,8 +57,8 @@ const AllCategoryAdminTable = () => {
         size: 100,
         Cell: ({ row }) => (
           <div className="flex space-x-2">
-            <button className="mr-2" onClick={() => handleEditCategory(row) }>
-              <PencilIcon className="h-5 w-5 text-green-500"/>
+            <button className="mr-2" onClick={() => handleEditCategory(row)}>
+              <PencilIcon className="h-5 w-5 text-green-500" />
             </button>
             <button className="text-red-500" onClick={() => handleDelete(row)}>
               <TrashIcon className="h-5 w-5" />
@@ -76,12 +73,12 @@ const AllCategoryAdminTable = () => {
   // Fetch all categories
   const fetchCategories = async () => {
     try {
-      const response = await fetch("/api/categories"); 
+      const response = await fetch("/api/categories");
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
       }
       const data = await response.json();
-      setCategoriesData(data); 
+      setCategoriesData(data);
     } catch (error) {
       setError(error.message);
     }
@@ -92,9 +89,8 @@ const AllCategoryAdminTable = () => {
   }, []);
 
   const handleEditCategory = async (row) => {
-    router.push(`/allcategoryadmin/editcategory/${row.original.id}`)
-  }
-
+    router.push(`/admin/categories/edit/${row.original.id}`);
+  };
 
   // Handle Delete Button Click
   const handleDelete = (row) => {
@@ -123,7 +119,6 @@ const AllCategoryAdminTable = () => {
       setError(error.message);
     }
   };
-
 
   // Delete Category
   const deleteCategory = async () => {
@@ -164,11 +159,10 @@ const AllCategoryAdminTable = () => {
         </div>
       )}
 
-       <div>
+      <div>
         <CommonTable columns={columns} data={categoriesData} minRows={10} />
       </div>
 
-    
       {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">

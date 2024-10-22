@@ -5,32 +5,32 @@ const Page = () => {
   const [text, setText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (e) => {
-      e.preventDefault(); 
-  
-      setIsSubmitting(true); 
-      try {
-        const response = await fetch("/api/navLogo", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text }), 
-        });
-  
-        if (!response.ok) {
-          throw new Error("Failed to save logo text");
-        }
-  
-        const result = await response.json();
-        console.log(result);
-        setText("");
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setIsSubmitting(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/navLogo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save logo text");
       }
-    };
+
+      const result = await response.json();
+      console.log(result);
+      setText("");
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>

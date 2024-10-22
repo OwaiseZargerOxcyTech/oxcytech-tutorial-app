@@ -251,7 +251,7 @@ const AllBlogAdminTable = () => {
       console.error("Unapprove blog operation error", error);
     }
   };
-
+*/
   const handleCancelDeleteRequest = async (row) => {
     try {
       const response = await fetch("/api/combinedapi", {
@@ -279,7 +279,6 @@ const AllBlogAdminTable = () => {
       console.error("Cancel Delete Request operation error", error);
     }
   };
-*/
 
   const handleGetBlogs = async (e) => {
     try {
@@ -325,7 +324,7 @@ const AllBlogAdminTable = () => {
     const encodedID = encodeURIComponent(encryptedID);
 
     router.push(
-      `/editblogadmin?encryptedID=${encodedID}&published=${row.original.published}`
+      `/admin/blogs/edit?encryptedID=${encodedID}&published=${row.original.published}`
     );
   };
 

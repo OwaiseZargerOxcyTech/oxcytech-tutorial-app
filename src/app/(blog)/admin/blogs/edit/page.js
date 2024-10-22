@@ -206,7 +206,7 @@ const EditBlog = () => {
       if (error !== undefined) {
         console.log("Blog Updated error:", error);
       } else {
-        router.push("/allblogadmin");
+        router.push("/admin/blogs/all");
       }
       setFormSubmitted(false);
     } catch (error) {

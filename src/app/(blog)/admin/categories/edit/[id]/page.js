@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 
 const EditCategory = () => {
   const router = useRouter();
-  const { id } = useParams(); 
+  const { id } = useParams();
   // const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
@@ -46,7 +46,7 @@ const EditCategory = () => {
 
     try {
       const response = await fetch(`/api/categories/${id}`, {
-        method: "PUT", 
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -62,14 +62,12 @@ const EditCategory = () => {
         throw new Error("Failed to update category");
       }
 
-      router.push("/allcategoryadmin");
+      router.push("/admin/categories/all");
     } catch (err) {
       setError(err.message);
       setFormSubmitted(false);
     }
   };
-
-
 
   return (
     <>
@@ -85,7 +83,7 @@ const EditCategory = () => {
         <div className="card w-full bg-base-100 rounded-md">
           <form className="card-body" onSubmit={handleSubmit}>
             <h1 className="pt-4 text-center text-3xl font-semibold">
-            Edit Category
+              Edit Category
             </h1>
 
             <div className="mt-6">

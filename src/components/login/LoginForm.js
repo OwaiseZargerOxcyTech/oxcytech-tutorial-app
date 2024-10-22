@@ -28,7 +28,7 @@ const LoginForm = () => {
       if (session && session.user && session.user.name === "admin") {
         router.push("/adminform");
       } else if (session && session.user && session.user.name === "employee") {
-        router.push("/allblogemployee");
+        router.push("/authors/blogs/all");
       } else {
         console.error("Invalid user type");
       }

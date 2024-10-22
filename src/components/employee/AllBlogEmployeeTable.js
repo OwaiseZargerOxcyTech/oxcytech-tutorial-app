@@ -168,7 +168,7 @@ const AllBlogEmployeeTable = () => {
     const encodedID = encodeURIComponent(encryptedID);
 
     router.push(
-      `/editblogemployee?encryptedID=${encodedID}&published=${row.original.published}`
+      `/authors/blogs/edit?encryptedID=${encodedID}&published=${row.original.published}`
     );
   };
 

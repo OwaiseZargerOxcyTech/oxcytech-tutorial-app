@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 const Page = () => {
   const [footer, setFooter] = useState("");
-  const [formSubmitted, setFormSubmitted] = useState("")
+  const [formSubmitted, setFormSubmitted] = useState("");
 
   const { data: session, status } = useSession();
 
@@ -20,7 +20,7 @@ const Page = () => {
     e.preventDefault();
     const slug = footer
       .toLowerCase()
-      .trim() 
+      .trim()
       .replace(/[.]+/g, "")
       .replace(/^[^\w]+|[^\w]+$/g, "")
       .replace(/[^\w\s-]/g, "")

@@ -34,6 +34,12 @@ export async function PUT(req) {
         { status: 400 }
       );
     }
+    if (isNaN(categoryId)) {
+      return NextResponse.json(
+        { error: "Invalid category ID" },
+        { status: 400 }
+      );
+    }
 
     const blogData = {
       title,
@@ -41,7 +47,7 @@ export async function PUT(req) {
       description,
       publishDate: publishDateObj,
       content,
-      featuredpost: featuredPost,
+      featuredpost: featuredPost || "no",
       category: {
         connect: {
           id: categoryId,

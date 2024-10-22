@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 
 const EditFooter = () => {
   const router = useRouter();
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -40,7 +40,7 @@ const EditFooter = () => {
 
     try {
       const response = await fetch(`/api/footer/${id}`, {
-        method: "PUT", 
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -54,14 +54,12 @@ const EditFooter = () => {
         throw new Error("Failed to update footer");
       }
 
-      router.push("/allfooteradmin");
+      router.push("/admin/footer/all");
     } catch (err) {
       setError(err.message);
       setFormSubmitted(false);
     }
   };
-
-
 
   return (
     <>
@@ -77,7 +75,7 @@ const EditFooter = () => {
         <div className="card w-full bg-base-100 rounded-md">
           <form className="card-body" onSubmit={handleSubmit}>
             <h1 className="pt-4 text-center text-3xl font-semibold">
-            Edit Footer
+              Edit Footer
             </h1>
 
             <div className="mt-6">

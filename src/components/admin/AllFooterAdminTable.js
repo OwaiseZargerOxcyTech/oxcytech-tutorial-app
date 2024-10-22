@@ -6,14 +6,12 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 const AllFooterAdminTable = () => {
   const [footerData, setFooterData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-
 
   const columns = useMemo(
     () => [
@@ -25,7 +23,9 @@ const AllFooterAdminTable = () => {
           <input
             type="checkbox"
             checked={row.original.isActive}
-            onChange={() => handleToggleActive(row.original.id, row.original.isActive)}
+            onChange={() =>
+              handleToggleActive(row.original.id, row.original.isActive)
+            }
           />
         ),
       },
@@ -43,11 +43,8 @@ const AllFooterAdminTable = () => {
             .replace(/-+/g, "-");
 
           return (
-            <div style={{ whiteSpace: "normal", wordBreak: "break-word",  }}>
-              <Link
-                href={`footeradmin/${slug}`}
-                className="text-black-500 "
-              >
+            <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+              <Link href={`footeradmin/${slug}`} className="text-black-500 ">
                 {cell.getValue()}
               </Link>
             </div>
@@ -60,8 +57,8 @@ const AllFooterAdminTable = () => {
         size: 100,
         Cell: ({ row }) => (
           <div className="flex space-x-2">
-            <button className="mr-2" onClick={() => handleEditFooter(row) }>
-              <PencilIcon className="h-5 w-5 text-green-500"/>
+            <button className="mr-2" onClick={() => handleEditFooter(row)}>
+              <PencilIcon className="h-5 w-5 text-green-500" />
             </button>
             <button className="text-red-500" onClick={() => handleDelete(row)}>
               <TrashIcon className="h-5 w-5" />
@@ -76,12 +73,12 @@ const AllFooterAdminTable = () => {
   // Fetch all footers
   const fetchFooters = async () => {
     try {
-      const response = await fetch("/api/footer"); 
+      const response = await fetch("/api/footer");
       if (!response.ok) {
         throw new Error("Failed to fetch footer");
       }
       const data = await response.json();
-      setFooterData(data); 
+      setFooterData(data);
     } catch (error) {
       setError(error.message);
     }
@@ -92,9 +89,8 @@ const AllFooterAdminTable = () => {
   }, []);
 
   const handleEditFooter = async (row) => {
-    router.push(`/allfooteradmin/editfooter/${row.original.id}`)
-  }
-
+    router.push(`/admin/footer/edit/${row.original.id}`);
+  };
 
   // Handle Delete Button Click
   const handleDelete = (row) => {
@@ -123,7 +119,6 @@ const AllFooterAdminTable = () => {
       setError(error.message);
     }
   };
-
 
   // Delete footer
   const deleteFooter = async () => {
@@ -164,11 +159,10 @@ const AllFooterAdminTable = () => {
         </div>
       )}
 
-       <div>
+      <div>
         <CommonTable columns={columns} data={footerData} minRows={10} />
       </div>
 
-    
       {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">

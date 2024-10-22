@@ -1,10 +1,10 @@
 "use client";
 import React, { Suspense } from "react";
-import { useState,  useEffect } from "react";
+import { useState, useEffect } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
 
 const DynamicSunEditor = dynamic(() => import("suneditor-react"), {
@@ -33,6 +33,7 @@ const EditBlog = () => {
   const { data: session, status } = useSession();
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const getBlogData = async () => {
@@ -43,7 +44,7 @@ const EditBlog = () => {
 
         const published = searchParams.get("published");
 
-        const response = await fetch("/api/fetchblog", {
+        const response = await fetch("/api/admin/blogs/get", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -115,7 +116,7 @@ const EditBlog = () => {
       formData.append("blogLiveId", blogLiveId);
       formData.append("featuredPost", featuredPost);
 
-      const response = await fetch("/api/updateblog", {
+      const response = await fetch("/api/admin/blogs/update", {
         method: "PUT",
         body: formData,
       });
@@ -125,7 +126,7 @@ const EditBlog = () => {
       if (error !== undefined) {
         console.log("Blog Updated error:", error);
       }
-      window.location.href = "/allblogemployee";
+      router.push("/authors/blogs/all");
     } catch (error) {
       console.error("Blog Update operation error", error);
     }

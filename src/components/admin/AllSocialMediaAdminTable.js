@@ -6,14 +6,12 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 const AllSocialMediaAdminTable = () => {
   const [socialmedia, setSocialmedia] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-
 
   const columns = useMemo(
     () => [
@@ -25,7 +23,9 @@ const AllSocialMediaAdminTable = () => {
           <input
             type="checkbox"
             checked={row.original.isActive}
-            onChange={() => handleToggleActive(row.original.id, row.original.isActive)}
+            onChange={() =>
+              handleToggleActive(row.original.id, row.original.isActive)
+            }
           />
         ),
       },
@@ -34,15 +34,15 @@ const AllSocialMediaAdminTable = () => {
         header: "Account Name",
         size: 200,
         Cell: ({ cell, row }) => {
-            const accountLink = row.original.link;
+          const accountLink = row.original.link;
 
           return (
-            <div style={{ whiteSpace: "normal", wordBreak: "break-word",  }}>
+            <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
               <Link
                 href={accountLink}
                 className="text-black-500 "
                 target="_blank"
-                rel="noopener noreferrer" 
+                rel="noopener noreferrer"
               >
                 {cell.getValue()}
               </Link>
@@ -56,8 +56,8 @@ const AllSocialMediaAdminTable = () => {
         size: 100,
         Cell: ({ row }) => (
           <div className="flex space-x-2">
-            <button className="mr-2" onClick={() => handleEditAccount(row) }>
-              <PencilIcon className="h-5 w-5 text-green-500"/>
+            <button className="mr-2" onClick={() => handleEditAccount(row)}>
+              <PencilIcon className="h-5 w-5 text-green-500" />
             </button>
             <button className="text-red-500" onClick={() => handleDelete(row)}>
               <TrashIcon className="h-5 w-5" />
@@ -72,12 +72,12 @@ const AllSocialMediaAdminTable = () => {
   // Fetch all accounts
   const fetchaccounts = async () => {
     try {
-      const response = await fetch("/api/socialmedia"); 
+      const response = await fetch("/api/socialmedia");
       if (!response.ok) {
         throw new Error("Failed to fetch account");
       }
       const data = await response.json();
-      setSocialmedia(data); 
+      setSocialmedia(data);
     } catch (error) {
       setError(error.message);
     }
@@ -88,9 +88,8 @@ const AllSocialMediaAdminTable = () => {
   }, []);
 
   const handleEditAccount = async (row) => {
-    router.push(`/allsocialmediaadmin/editsocialmedia/${row.original.id}`)
-  }
-
+    router.push(`/admin/social-media/edit/${row.original.id}`);
+  };
 
   // Handle Delete Button Click
   const handleDelete = (row) => {
@@ -119,7 +118,6 @@ const AllSocialMediaAdminTable = () => {
       setError(error.message);
     }
   };
-
 
   // Delete account
   const deleteAccount = async () => {
@@ -160,11 +158,10 @@ const AllSocialMediaAdminTable = () => {
         </div>
       )}
 
-       <div>
+      <div>
         <CommonTable columns={columns} data={socialmedia} minRows={10} />
       </div>
 
-    
       {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
