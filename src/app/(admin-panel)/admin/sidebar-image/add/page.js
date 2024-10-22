@@ -14,7 +14,8 @@ const Page = () => {
         throw new Error("Failed to fetch image");
       }
       const data = await response.json();
-      // Additional handling of fetched data can be done here
+      const newName = data.result.imageUrl.split("/").pop().split(".")[0];
+      setImageName(newName);
     } catch (error) {
       console.error("Error fetching image:", error);
       setError("Error fetching image.");
