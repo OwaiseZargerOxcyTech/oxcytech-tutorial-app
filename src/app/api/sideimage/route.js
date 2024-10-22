@@ -1,8 +1,6 @@
-import { put } from '@vercel/blob';
-import { PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
-
-const prisma = new PrismaClient();
+import { put } from "@vercel/blob";
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 
 export async function POST(request) {
   try {
@@ -12,9 +10,9 @@ export async function POST(request) {
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
-    console.log("this is the image post api")
-    const blobResponse = await put('your-image-path', image, {
-      access: 'public',
+    console.log("this is the image post api");
+    const blobResponse = await put("your-image-path", image, {
+      access: "public",
     });
 
     const imageUrl = blobResponse.url;
@@ -37,23 +35,23 @@ export async function POST(request) {
     }
   } catch (error) {
     console.error("Error adding image:", error);
-    return NextResponse.json(
-      { error: "Failed to add image" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to add image" }, { status: 500 });
   }
 }
 export async function GET() {
-    try {
-        const sideImage = await prisma.sideImg.findFirst();
-        
-        if (!sideImage) {
-            return NextResponse.json({ message: 'No image found' }, { status: 404 });
-        }
-  
-        return NextResponse.json({ image: sideImage.image }, { status: 200 }); 
-    } catch (error) {
-        console.error('Error fetching image:', error);
-        return NextResponse.json({ error: 'Failed to fetch image' }, { status: 500 });
+  try {
+    const sideImage = await prisma.sideImg.findFirst();
+
+    if (!sideImage) {
+      return NextResponse.json({ message: "No image found" }, { status: 404 });
     }
+
+    return NextResponse.json({ image: sideImage.image }, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 500 }
+    );
+  }
 }
