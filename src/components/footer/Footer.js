@@ -81,7 +81,10 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
             {activeFooters.map((item, index) => (
               <li key={index} className="flex">
-                <Link href={item.href}>
+                <Link
+                  // href={item.href} add links
+                  href="/contactus"
+                >
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>
               </li>

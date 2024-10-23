@@ -15,9 +15,9 @@ export default function BlogLists({ blogData }) {
                   <Image
                     src={blog.image}
                     alt={blog.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="w-full h-full"
+                    height={100}
+                    width={100}
+                    className=" w-full  object-cover"
                   />
                 </div>
               )}
@@ -48,10 +48,14 @@ export default function BlogLists({ blogData }) {
                 )}
 
                 {/* Blog Content Preview */}
+
                 {blog.content && (
-                  <p className="mb-4 text-gray-700">
-                    {blog.content.slice(0, 200)}...
-                  </p>
+                  <p
+                    className="mb-3 text-gray-700"
+                    dangerouslySetInnerHTML={{
+                      __html: blog.content.slice(0, 250) + "...",
+                    }}
+                  />
                 )}
 
                 {/* Read More Button */}
