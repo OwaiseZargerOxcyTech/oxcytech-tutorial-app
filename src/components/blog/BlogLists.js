@@ -11,13 +11,13 @@ export default function BlogLists({ blogData }) {
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Image Section */}
               {blog.image && (
-                <div className="relative w-full md:w-64 h-40 rounded-md overflow-hidden flex-shrink-0">
+                <div className="relative w-full md:w-64 h-40 rounded-md overflow-hidden ">
                   <Image
                     src={blog.image}
                     alt={blog.title}
-                    height={100}
-                    width={100}
-                    className=" w-full  object-cover"
+                    width={256}
+                    height={256}
+                    className="object-contain"
                   />
                 </div>
               )}

@@ -75,9 +75,9 @@ export default function LatestPosts() {
                   <Image
                     src={blog.image}
                     alt={blog.title}
-                    fill
-                    sizes="(max-width: 640px) 40px, (max-width: 768px) 50px, 60px"
-                    className="object-cover rounded-md"
+                    width={100}
+                    height={100}
+                    className="object-contain rounded-md"
                   />
                 </Link>
               )}
