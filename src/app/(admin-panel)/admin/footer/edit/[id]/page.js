@@ -15,7 +15,7 @@ const EditFooter = () => {
   useEffect(() => {
     const fetchfooters = async () => {
       try {
-        const response = await fetch(`/api/footer/${id}`);
+        const response = await fetch(`/api/admin/footer/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch footer data");
         }
@@ -39,7 +39,7 @@ const EditFooter = () => {
     setError("");
 
     try {
-      const response = await fetch(`/api/footer/${id}`, {
+      const response = await fetch(`/api/admin/footer/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

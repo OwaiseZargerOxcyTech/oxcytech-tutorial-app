@@ -31,7 +31,7 @@ export default function LatestPosts() {
     // Fetch category data
     async function fetchCategoryData() {
       try {
-        const response = await fetch("/api/categories", {
+        const response = await fetch("/api/admin/categories", {
           method: "GET",
         });
         const categoryResult = await response.json();

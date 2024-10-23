@@ -85,7 +85,7 @@ const AllAuthorsTable = () => {
 
   const handleGetEmployees = async (e) => {
     try {
-      const response = await fetch("/api/getemployees", {
+      const response = await fetch("/api/admin/get-employees", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

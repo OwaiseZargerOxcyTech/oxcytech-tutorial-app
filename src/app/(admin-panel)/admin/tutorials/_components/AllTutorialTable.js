@@ -65,7 +65,7 @@ const AllTutorialTable = () => {
                 onClick={async () => {
                   document.getElementById("update_modal").showModal();
                   try {
-                    const response = await fetch("/api/getusers", {
+                    const response = await fetch("/api/admin/get-all-users", {
                       method: "GET",
                       headers: {
                         "Content-Type": "application/json",

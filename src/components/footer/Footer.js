@@ -19,7 +19,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchActiveFooters = async () => {
       try {
-        const response = await fetch("/api/footer");
+        const response = await fetch("/api/admin/footer");
         if (!response.ok) {
           throw new Error("Failed to fetch footer");
         }
@@ -52,7 +52,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchActiveAccounts = async () => {
       try {
-        const response = await fetch("/api/socialmedia");
+        const response = await fetch("/api/admin/socialmedia");
         if (!response.ok) {
           throw new Error("Failed to fetch accounts");
         }

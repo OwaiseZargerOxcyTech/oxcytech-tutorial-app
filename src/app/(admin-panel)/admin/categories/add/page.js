@@ -32,7 +32,7 @@ const Page = () => {
     const isActive = true;
 
     try {
-      const response = await fetch("/api/categories", {
+      const response = await fetch("/api/admin/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

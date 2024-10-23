@@ -21,7 +21,7 @@ const EditAuthor = ({ params }) => {
   useEffect(() => {
     if (id) {
       const fetchAuthor = async () => {
-        const response = await fetch(`/api/getemployees/${id}`);
+        const response = await fetch(`/api/admin/get-employees/${id}`);
 
         // Check if the response is ok (status in the range 200-299)
         if (!response.ok) {

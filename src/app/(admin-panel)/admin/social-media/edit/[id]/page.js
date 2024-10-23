@@ -16,7 +16,7 @@ const EditSocialmedia = () => {
   useEffect(() => {
     const fetchaccount = async () => {
       try {
-        const response = await fetch(`/api/socialmedia/${id}`);
+        const response = await fetch(`/api/admin/socialmedia/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch account data");
         }
@@ -41,7 +41,7 @@ const EditSocialmedia = () => {
     setError("");
 
     try {
-      const response = await fetch(`/api/socialmedia/${id}`, {
+      const response = await fetch(`/api/admin/socialmedia/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -26,7 +26,7 @@ export default function Navbar() {
     // Fetch all categories and filter active ones
     const fetchActiveCategories = async () => {
       try {
-        const response = await fetch("/api/categories");
+        const response = await fetch("/api/admin/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
@@ -50,7 +50,7 @@ export default function Navbar() {
   useEffect(() => {
     const fetchLogoText = async () => {
       try {
-        const response = await fetch("/api/navLogo");
+        const response = await fetch("/api/admin/nav-logo");
         if (!response.ok) {
           throw new Error("Failed to fetch logo text");
         }
