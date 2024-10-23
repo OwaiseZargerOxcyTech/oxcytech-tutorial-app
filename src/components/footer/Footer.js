@@ -81,7 +81,7 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
             {activeFooters.map((item, index) => (
               <li key={index} className="flex">
-                <Link href={item.href} className="hover:text-white">
+                <Link href={item.href}>
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>
               </li>
@@ -95,7 +95,7 @@ export default function Footer() {
                 <Link
                   href={item.href}
                   target="_blank"
-                  className="flex items-center hover:text-white"
+                  className="flex items-center "
                 >
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>

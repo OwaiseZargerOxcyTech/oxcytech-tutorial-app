@@ -10,6 +10,7 @@ import AuthProviders from "@/components/providers/AuthProviders";
 const montserrat = Montserrat({
   weight: ["300", "400"],
   subsets: ["latin"],
+  display: "swap", // Ensures fallback font until Montserrat loads
 });
 
 export default function RootLayout({ children }) {

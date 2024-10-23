@@ -23,28 +23,37 @@ const BlogPage = ({ data, type }) => {
   const handlePageChange = (pageNo) => {
     setCurrentPage(pageNo);
   };
+
   return (
     <>
-      <main>
-        <div className="mx-auto max-w-2xl px-6 py-10 sm:px-8 sm:py-16 lg:max-w-7xl ">
+      <main className="bg-gray-50 min-h-screen py-10">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 sm:gap-x-10">
-            <div className="col-span-8">
+            {/* Main Content */}
+            <div className="lg:col-span-8 col-span-12">
               {type === "category" ? (
-                <BlogLists blogData={data} />
+                <BlogLists blogData={data.slice(startIndex, endIndex)} />
               ) : (
                 <SingleBlogPage blog={data} />
               )}
-              <Pagination
-                handlePageChange={handlePageChange}
-                currentPage={currentPage}
-                totalBlogs={totalBlogs}
-                blogsPerPage={blogsPerPage}
-                startIndex={startIndex}
-                endIndex={endIndex}
-              />
+
+              {/* Pagination */}
+              {type === "category" && (
+                <div className="mt-10">
+                  <Pagination
+                    handlePageChange={handlePageChange}
+                    currentPage={currentPage}
+                    totalBlogs={totalBlogs}
+                    blogsPerPage={blogsPerPage}
+                    startIndex={startIndex}
+                    endIndex={endIndex}
+                  />
+                </div>
+              )}
             </div>
 
-            <div className=" col-span-4 space-y-10">
+            {/* Sidebar */}
+            <div className="lg:col-span-4 col-span-12 space-y-8">
               <ImageInSidebar />
               <FeaturedPosts />
               <LatestPosts />

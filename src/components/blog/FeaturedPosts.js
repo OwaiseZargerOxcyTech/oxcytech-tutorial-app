@@ -87,50 +87,43 @@ export default function FeaturedPosts() {
   };
 
   return (
-    <div className="space-y-10">
-      <h1 className="text-gray-900 inline-block font-bold text-lg border-b-4 border-red-500">
+    <div className="space-y-4 p-4 bg-white rounded-sm shadow-md ">
+      <h1 className="text-gray-900 font-bold text-xl p-2 border-b-2 border-red-500 ">
         Featured Posts
       </h1>
-      <div className="space-y-4">
+      <div className="space-y-1">
         {blogData?.map((blog, index) => (
           <div
             key={index}
-            className="border-2 px-2 rounded-lg h-[120px] flex justify-between items-center"
+            className="flex items-start space-x-4 rounded-md border pt-4"
           >
-            <div className="grid grid-cols-3">
-              <div className="col-span-1">
-                <div className=" bg-red-100 w-full h-[100px] rounded-lg">
-                  <div className="card-zoom-image">
-                    {blog.image && imageData[blog.id] && (
-                      <Link
-                        prefetch={false}
-                        href={`/${getCategoryName(blog.category_id)}/${
-                          blog.slug
-                        }`}
-                      >
-                        <Image
-                          src={imageData[blog.id]}
-                          alt="img"
-                          fill
-                          className="w-full h-full object-cover"
-                        />
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="col-span-2">
-                <div className="flex flex-col justify-start items-start pl-2 space-y-4">
-                  <Link
-                    prefetch={false}
-                    href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
-                  >
-                    <h1 className="text-gray-800 hover:text-red-600 hover:underline text-md font-bold">
-                      {blog.title}
-                    </h1>
-                  </Link>
-                </div>
-              </div>
+            <div className="relative w-16 h-16 flex-shrink-0">
+              {blog.image && imageData[blog.id] && (
+                <Link
+                  prefetch={false}
+                  href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
+                >
+                  <Image
+                    src={imageData[blog.id]}
+                    alt={blog.title}
+                    layout="fill"
+                    className="object-cover rounded-md"
+                  />
+                </Link>
+              )}
+            </div>
+            <div className="flex-1">
+              <Link
+                prefetch={false}
+                href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
+              >
+                <h2 className="text-gray-800 text-md font-semibold hover:text-red-600 hover:underline">
+                  {blog.title}
+                </h2>
+              </Link>
+              <p className="text-xs text-gray-500 mt-1">
+                {getCategoryName(blog.category_id)}
+              </p>
             </div>
           </div>
         ))}

@@ -20,19 +20,23 @@ export default function MobileNavbar({ navigationItems, open, toggleMenu }) {
 
   return (
     <div
-      className={`md:hidden block bg-gray-100 fixed w-full top-20 overflow-y-auto bottom-0 py-6 duration-500 ${
-        open ? "left-0" : "left-[-100%]"
+      className={`md:hidden block fixed w-full top-20 bottom-0 py-6 duration-500 bg-white transition-all transform ${
+        open ? "left-0 opacity-100" : "left-[-100%] opacity-0"
       }`}
+      style={{ transitionProperty: "left, opacity" }}
     >
       {navigationItems.map((item, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          className="px-4 py-2 transform transition-transform duration-300 hover:scale-105"
+        >
           <Link href={item.href} onClick={toggleMenu}>
             <h1
               className={`${
                 item.current || isActive(item.href)
-                  ? "text-indigo-600"
-                  : "text-gray-700"
-              } py-2 pl-7 flex justify-between items-center md:pr-0 pr-5 hover:bg-indigo-500 hover:text-white font-bold`}
+                  ? "text-blue-400"
+                  : "text-black"
+              } text-4xl font-semibold bg-opacity-50 bg-gray-200 rounded-md p-2 hover:bg-opacity-80`}
             >
               {item.label}
             </h1>
