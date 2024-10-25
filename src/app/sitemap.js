@@ -3,33 +3,53 @@ export default async function sitemap() {
 
   console.log("Calling getpublishedblogs API...");
 
-  const response = await fetch(baseUrl + "/api/admin/getpublishedblogs", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch(baseUrl + "/api/admin/getpublishedblogs", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // call api in thunder client ad get category and fix it
+    });
 
-  console.log("API response:", response);
+    if (!response.ok) {
+      console.error(
+        `Failed to fetch blogs: ${response.status} ${response.statusText}`
+      );
+      return [
+        {
+          url: baseUrl,
+          lastModified: new Date(),
+        },
+      ];
+    }
 
-  const { result } = await response.json();
+    const { result } = await response.json();
+    console.log("API result:", result);
 
-  console.log("API result:", result);
+    const blogPosts = result?.map((post) => ({
+      url: `${baseUrl}/${post.category.name}/${post.slug}`,
+      lastModified: post.createdAt
+        ? new Date(post.createdAt).toISOString()
+        : new Date().toISOString(),
+    }));
 
-  const blogPosts = result?.map((post) => {
-    return {
-      url: `${baseUrl}/blog3/${post?.slug}`,
-      lastModified: post?.createdAt,
-    };
-  });
+    console.log("Generated blog posts:", blogPosts);
 
-  console.log("Generated blog posts:", blogPosts);
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-    },
-    ...blogPosts,
-  ];
+    return [
+      {
+        url: baseUrl,
+        lastModified: new Date(),
+      },
+      ...blogPosts,
+    ];
+  } catch (error) {
+    console.error("Error generating sitemap:", error);
+    return [
+      {
+        url: baseUrl,
+        lastModified: new Date(),
+      },
+    ];
+  }
 }
