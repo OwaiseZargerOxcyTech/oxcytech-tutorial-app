@@ -23,7 +23,7 @@ const Page = () => {
     const isActive = true;
 
     try {
-      const response = await fetch("/api/socialmedia", {
+      const response = await fetch("/api/admin/socialmedia", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

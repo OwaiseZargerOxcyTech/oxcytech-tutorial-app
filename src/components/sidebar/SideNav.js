@@ -20,88 +20,63 @@ export default function SideNav() {
 
   const navItems = [
     {
-      href: "/admin/authors/add",
-      label: "Add Author",
-      roles: ["admin"],
-    },
-    {
       href: "/admin/authors/all",
-      label: "All Authors",
+      label: "Authors",
       roles: ["admin"],
     },
-    {
-      href: "/admin/blogs/add",
-      label: "Add Blog",
-      roles: ["admin", "employee"],
-    },
+
     {
       href: "/admin/blogs/all",
-      label: "All Blog",
+      label: "Blogs",
       roles: ["admin"],
     },
     {
       href: "/authors/blogs/all",
-      label: "All Blog",
+      label: "Blogs",
       roles: ["employee"],
     },
-    {
-      href: "/admin/tutorials/add",
-      label: "Add Tutorial",
-      roles: ["admin"],
-    },
+
     {
       href: "/admin/tutorials/all",
-      label: "All Tutorial",
+      label: "Tutorials",
       roles: ["admin"],
     },
     {
       href: "/authors/tutorials/all",
-      label: "All Tutorial",
+      label: "Tutorials",
       roles: ["employee"],
     },
-    {
-      href: "/admin/categories/add",
-      label: "Add Category",
-      roles: ["admin"],
-    },
+
     {
       href: "/admin/categories/all",
-      label: "All Categories",
+      label: "Categories",
       roles: ["admin"],
     },
-    {
-      href: "/admin/footer/add",
-      label: "Add Footer",
-      roles: ["admin"],
-    },
+
     {
       href: "/admin/footer/all",
-      label: "All Footer",
+      label: "Footers",
       roles: ["admin"],
     },
-    {
-      href: "/admin/social-media/add",
-      label: "Add Social Media",
-      roles: ["admin"],
-    },
+
     {
       href: "/admin/social-media/all",
-      label: "All Social Media",
+      label: "Social Media",
       roles: ["admin"],
     },
     {
       href: "/admin/favicon/add",
-      label: "Add Favicon",
+      label: "Favicon",
       roles: ["admin"],
     },
     {
       href: "/admin/logo/add",
-      label: "Add Logo Text",
+      label: "Logo Text",
       roles: ["admin"],
     },
     {
       href: "/admin/sidebar-image/add",
-      label: "Add Side Image",
+      label: "Image in Sidebar",
       roles: ["admin"],
     },
   ];

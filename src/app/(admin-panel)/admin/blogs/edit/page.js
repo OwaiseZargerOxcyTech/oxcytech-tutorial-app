@@ -69,7 +69,7 @@ const EditBlog = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("/api/getusers", {
+      const response = await fetch("/api/admin/get-all-users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +114,7 @@ const EditBlog = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("/api/categories");
+      const response = await fetch("/api/admin/categories");
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
       }

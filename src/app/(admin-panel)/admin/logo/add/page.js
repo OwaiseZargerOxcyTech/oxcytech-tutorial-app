@@ -10,7 +10,7 @@ const Page = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/navLogo", {
+      const response = await fetch("/api/admin/nav-logo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -11,7 +11,7 @@ const AddTutorialForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/getusers", {
+        const response = await fetch("/api/admin/get-all-users", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -30,7 +30,7 @@ const Page = () => {
     const isActive = true;
 
     try {
-      const response = await fetch("/api/footer", {
+      const response = await fetch("/api/admin/footer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

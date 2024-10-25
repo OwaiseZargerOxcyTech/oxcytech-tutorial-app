@@ -19,7 +19,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchActiveFooters = async () => {
       try {
-        const response = await fetch("/api/footer");
+        const response = await fetch("/api/admin/footer");
         if (!response.ok) {
           throw new Error("Failed to fetch footer");
         }
@@ -52,7 +52,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchActiveAccounts = async () => {
       try {
-        const response = await fetch("/api/socialmedia");
+        const response = await fetch("/api/admin/socialmedia");
         if (!response.ok) {
           throw new Error("Failed to fetch accounts");
         }
@@ -81,7 +81,10 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
             {activeFooters.map((item, index) => (
               <li key={index} className="flex">
-                <Link href={item.href} className="hover:text-white">
+                <Link
+                  // href={item.href} add links
+                  href="/contactus"
+                >
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>
               </li>
@@ -95,7 +98,7 @@ export default function Footer() {
                 <Link
                   href={item.href}
                   target="_blank"
-                  className="flex items-center hover:text-white"
+                  className="flex items-center "
                 >
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>

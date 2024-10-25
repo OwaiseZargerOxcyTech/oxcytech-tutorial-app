@@ -73,7 +73,7 @@ const AllFootersTable = () => {
   // Fetch all footers
   const fetchFooters = async () => {
     try {
-      const response = await fetch("/api/footer");
+      const response = await fetch("/api/admin/footer");
       if (!response.ok) {
         throw new Error("Failed to fetch footer");
       }
@@ -101,7 +101,7 @@ const AllFootersTable = () => {
   // Handle Toggle Active Status
   const handleToggleActive = async (id, currentStatus) => {
     try {
-      const response = await fetch(`/api/footer/${id}`, {
+      const response = await fetch(`/api/admin/footer/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const AllFootersTable = () => {
   const deleteFooter = async () => {
     setFormSubmitted(true);
     try {
-      const response = await fetch(`/api/footer/${selectedId}`, {
+      const response = await fetch(`/api/admin/footer/${selectedId}`, {
         method: "DELETE",
       });
 

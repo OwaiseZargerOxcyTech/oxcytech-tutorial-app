@@ -72,7 +72,7 @@ const AllSocialMediaTable = () => {
   // Fetch all accounts
   const fetchaccounts = async () => {
     try {
-      const response = await fetch("/api/socialmedia");
+      const response = await fetch("/api/admin/socialmedia");
       if (!response.ok) {
         throw new Error("Failed to fetch account");
       }
@@ -100,7 +100,7 @@ const AllSocialMediaTable = () => {
   // Handle Toggle Active Status
   const handleToggleActive = async (id, currentStatus) => {
     try {
-      const response = await fetch(`/api/socialmedia/${id}`, {
+      const response = await fetch(`/api/admin/socialmedia/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const AllSocialMediaTable = () => {
   const deleteAccount = async () => {
     setFormSubmitted(true);
     try {
-      const response = await fetch(`/api/socialmedia/${selectedId}`, {
+      const response = await fetch(`/api/admin/socialmedia/${selectedId}`, {
         method: "DELETE",
       });
 

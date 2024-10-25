@@ -18,7 +18,7 @@ const EditCategory = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await fetch(`/api/categories/${id}`);
+        const response = await fetch(`/api/admin/categories/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch category data");
         }
@@ -45,7 +45,7 @@ const EditCategory = () => {
     setError("");
 
     try {
-      const response = await fetch(`/api/categories/${id}`, {
+      const response = await fetch(`/api/admin/categories/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

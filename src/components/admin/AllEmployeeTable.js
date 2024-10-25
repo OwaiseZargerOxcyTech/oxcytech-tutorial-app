@@ -82,7 +82,7 @@ const AllEmployeeTable = () => {
 
   const handleGetEmployees = async (e) => {
     try {
-      const response = await fetch("/api/getemployees", {
+      const response = await fetch("/api/admin/get-employees", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -111,8 +111,7 @@ const AllEmployeeTable = () => {
     setEmail(row.original.email);
     setauthorDetail(row.original.authorDetail);
     setImage(null);
-    // console.log("selectedID : ", selectedId, "Type of selectedId: ", typeof selectedId); 
-
+    // console.log("selectedID : ", selectedId, "Type of selectedId: ", typeof selectedId);
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];

@@ -73,7 +73,7 @@ const AllCategoryTable = () => {
   // Fetch all categories
   const fetchCategories = async () => {
     try {
-      const response = await fetch("/api/categories");
+      const response = await fetch("/api/admin/categories");
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
       }
@@ -101,7 +101,7 @@ const AllCategoryTable = () => {
   // Handle Toggle Active Status
   const handleToggleActive = async (id, currentStatus) => {
     try {
-      const response = await fetch(`/api/categories/${id}`, {
+      const response = await fetch(`/api/admin/categories/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const AllCategoryTable = () => {
   const deleteCategory = async () => {
     setFormSubmitted(true);
     try {
-      const response = await fetch(`/api/categories/${selectedId}`, {
+      const response = await fetch(`/api/admin/categories/${selectedId}`, {
         method: "DELETE",
       });
 

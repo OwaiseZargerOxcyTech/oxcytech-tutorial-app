@@ -14,14 +14,10 @@ export default function Navbar() {
   const [logoText, setLogoText] = useState("");
 
   useEffect(() => {
-    const currentItem = activeCategories.find(
-      (item) => item.href === pathname
-    );
+    const currentItem = activeCategories.find((item) => item.href === pathname);
     if (currentItem) {
       // Reset current status
-      activeCategories.forEach(
-        (item) => (item.current = false)
-      );
+      activeCategories.forEach((item) => (item.current = false));
       currentItem.current = true;
     }
   }, [pathname, activeCategories]);
@@ -30,7 +26,7 @@ export default function Navbar() {
     // Fetch all categories and filter active ones
     const fetchActiveCategories = async () => {
       try {
-        const response = await fetch("/api/categories");
+        const response = await fetch("/api/admin/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
@@ -54,7 +50,7 @@ export default function Navbar() {
   useEffect(() => {
     const fetchLogoText = async () => {
       try {
-        const response = await fetch("/api/navLogo");
+        const response = await fetch("/api/admin/nav-logo");
         if (!response.ok) {
           throw new Error("Failed to fetch logo text");
         }
@@ -72,15 +68,14 @@ export default function Navbar() {
     setOpen(!open);
   };
 
-
   const handleSignOut = () => {
     localStorage.removeItem("session");
     window.location.href = "/";
   };
 
   return (
-    <div className="w-full bg-white fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+    <div className="w-full bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Disclosure as="nav">
           {({ open: disclosureOpen }) => (
             <div>
@@ -108,8 +103,11 @@ export default function Navbar() {
                     </Disclosure.Button>
                   </div>
 
-                  <Link href="/" className="text-gray-700 text-2xl font-bold ml-4 md:ml-0 cursor-pointer">
-                  {logoText} 
+                  <Link
+                    href="/"
+                    className="text-gray-700 text-2xl font-bold ml-4 md:ml-0 cursor-pointer"
+                  >
+                    {logoText}
                   </Link>
                 </div>
 
@@ -137,21 +135,10 @@ export default function Navbar() {
                             }}
                           >
                             <Link href={item.href}>
-                            
                               <b>{item.label}</b>
                             </Link>
                           </li>
                         ))}
-
-                        {/* Optional: Add Sign Out button if needed */}
-                        {/* <li>
-                          <button
-                            onClick={handleSignOut}
-                            className="text-red-500 font-bold"
-                          >
-                            Sign Out
-                          </button>
-                        </li> */}
                       </ul>
                     </div>
                   </div>

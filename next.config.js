@@ -100,7 +100,7 @@ const nextConfig = {
     ],
   },
 
-  swcMinify: false,
+  // swcMinify: false,
   // experimental: {
   //   serverActions: true,
   // },

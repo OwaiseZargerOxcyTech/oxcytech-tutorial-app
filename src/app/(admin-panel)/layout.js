@@ -10,6 +10,7 @@ import AdminNavbar from "@/components/navbar/AdminNavbar";
 const montserrat = Montserrat({
   weight: ["300", "400"],
   subsets: ["latin"],
+  display: "swap", // Ensures fallback font until Montserrat loads
 });
 
 export default function BlogLayout({ children }) {
@@ -17,7 +18,6 @@ export default function BlogLayout({ children }) {
   useEffect(() => {
     const getfaviconimage = async () => {
       try {
-        
         const response = await fetch("/api/combinedapi", {
           method: "POST",
           headers: {
