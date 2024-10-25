@@ -11,24 +11,24 @@ export default function BlogLists({ blogData }) {
             <div className="flex flex-col md:flex-row gap-6 items-start">
               {/* Image Section */}
               {blog.image && (
-                <div className="relative w-full md:w-64 h-40 rounded-md overflow-hidden ">
+                <div className="relative w-full md:w-64 h-44 rounded-md overflow-hidden ">
                   <Image
                     src={blog.image}
                     alt={blog.title}
-                    width={256}
-                    height={256}
+                    width={320}
+                    height={280}
                     className="object-contain"
                   />
                 </div>
               )}
 
               {/* Content Section */}
-              <div className="flex-1">
+              <div className="flex-1 leading-tight">
                 <Link
                   prefetch={false}
                   href={`${blog.categoryName.toLowerCase()}/${blog.slug}`}
                 >
-                  <h1 className="mb-2 text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
+                  <h1 className="mb-2 text-xl font-bold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
                     {blog.title}
                   </h1>
                 </Link>
@@ -51,9 +51,9 @@ export default function BlogLists({ blogData }) {
 
                 {blog.content && (
                   <p
-                    className="mb-3 text-gray-700"
+                    className="mb-1 text-gray-700 text-justify"
                     dangerouslySetInnerHTML={{
-                      __html: blog.content.slice(0, 250) + "...",
+                      __html: blog.content.slice(0, 150) + "...",
                     }}
                   />
                 )}
@@ -69,7 +69,7 @@ export default function BlogLists({ blogData }) {
                     .replace(/[^\w\s-]/g, "")
                     .replace(/\s+/g, "-")
                     .replace(/-+/g, "-")}/${blog.slug}`}
-                  className="inline-block text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition-colors duration-300"
+                  className="inline-block text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md shadow-md transition-colors duration-300"
                 >
                   Read More
                 </Link>
