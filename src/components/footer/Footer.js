@@ -74,7 +74,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-700 mt-4 pt-4 ">
+    <footer className="bg-gray-50 border-t border-gray-700 mt-4 pt-4 w-full">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Footer Links */}
@@ -82,8 +82,11 @@ export default function Footer() {
             {activeFooters.map((item, index) => (
               <li key={index} className="flex">
                 <Link
-                  // href={item.href} add links
-                  href="/contactus"
+                  href={`/ft/${item.label
+                    .replace(/[^\w\s-]/g, "")
+                    .trim()
+                    .replace(/\s+/g, "-")
+                    .replace(/-+/g, "-")}`}
                 >
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>

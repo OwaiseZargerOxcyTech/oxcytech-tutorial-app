@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="flex flex-col lg:flex-row gap-6 p-6 animate-pulse">
+    <div className="flex flex-col lg:flex-row gap-6 p-4 animate-pulse">
       {/* 70% section with horizontal cards */}
       <div className="w-full lg:w-2/3 space-y-6">
         {[...Array(3)].map((_, index) => (

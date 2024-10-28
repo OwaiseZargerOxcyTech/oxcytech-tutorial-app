@@ -40,7 +40,11 @@ const SingleBlog = ({ params }) => {
       {blog ? (
         <BlogPage data={blog} type="singleBlog" />
       ) : (
-        <p>Blog not found</p>
+        <div className="min-h-screen">
+          <h1 className="animate-bounce text-3xl mt-4 text-red-500 text-center font-bold">
+            Blog not found
+          </h1>
+        </div>
       )}
     </main>
   );

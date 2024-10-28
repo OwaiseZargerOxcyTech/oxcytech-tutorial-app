@@ -74,7 +74,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+    <div className="w-full bg-white shadow-lg sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Disclosure as="nav">
           {({ open: disclosureOpen }) => (

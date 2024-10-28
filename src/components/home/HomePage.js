@@ -12,9 +12,8 @@ import Collaborate from "@/components/home/Collaborate";
 import MapAndAddress from "../common/MapAndAddress";
 
 const HomePage = () => {
- 
   return (
-    <main className="space-y-16">
+    <main className="space-y-8">
       {/* Section 1: Introduction */}
       <section className="bg-[#111013]">
         <WhatWeDo />
