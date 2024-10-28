@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function robots() {
-  const baseUrl = "https://https://oxcytech-tutorial-app.vercel.app/";
+  const baseUrl = "https://oxcytech-tutorial-app.vercel.app/";
   return {
     rules: {
       userAgent: "*",
