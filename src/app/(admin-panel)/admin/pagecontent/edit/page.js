@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
-import DatePicker from "react-datepicker";
 
 const DynamicSunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
@@ -18,53 +17,44 @@ const decryptID = (encryptedID, secretKey) => {
 
 const EditBlog = () => {
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedUserName, setSelectedUserName] = useState("");
   const [authorId, setAuthorId] = useState();
   const [selectedId, setSelectedId] = useState("");
-  const [blog, setBlog] = useState();
-  const [blogLiveId, setBlogLiveId] = useState(null);
-  const [featuredPost, setFeaturedPost] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [publishType, setPublishType] = useState("now");
   const [publishDate, setPublishDate] = useState(new Date());
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [pageContentItemData, setPageContentItemData] = useState(false);
 
-  const [isAdmin, setIsAdmin] = useState(false);
   const { data: session, status } = useSession();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const getBlogData = async () => {
+  const getPageContentItemData = async () => {
     try {
       const encryptedID = searchParams.get("encryptedID");
 
-      const blogID = decryptID(encryptedID, "thisissecret");
+      const pageContentItemID = decryptID(encryptedID, "thisissecret");
 
-      const published = searchParams.get("published");
-
-      const response = await fetch("/api/admin/blogs/get", {
+      const response = await fetch("/api/admin/pagecontent/get", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ blogID, published }),
+        body: JSON.stringify({ pageContentItemID }),
       });
 
       const { error, result } = await response.json();
 
       if (error !== undefined) {
-        console.log("Blog fetchingerror:", error);
+        console.log("page content item data fetchingerror:", error);
       }
-      setBlog(result);
+      setPageContentItemData(result);
     } catch (error) {
-      console.error("fetch blog operation error", error);
+      console.error("fetch page content item data operation error", error);
     }
   };
 
@@ -88,47 +78,27 @@ const EditBlog = () => {
     }
   };
   useEffect(() => {
-    getBlogData();
+    getPageContentItemData();
     fetchUserData();
   }, []);
 
   useEffect(() => {
-    if (blog && users.length > 0) {
-      setTitle(blog.title);
-      setDesc(blog.description);
-      setContent(blog.content);
-      setImageName(blog.imageName);
-      setImage(blog.image);
-      setSelectedId(blog.id);
-      setAuthorId(blog.author_id);
-      setBlogLiveId(blog.bloglive_id ? blog.bloglive_id : null);
-      setFeaturedPost(blog.featuredpost);
-      setSelectedCategory(blog.category_id);
+    if (pageContentItemData && users.length > 0) {
+      setTitle(pageContentItemData.title);
+      setDescription(pageContentItemData.description);
+      setContent(pageContentItemData.content);
+      setSelectedId(pageContentItemData.id);
+      setAuthorId(pageContentItemData.author_id);
 
-      const user = users.find((user) => user.id === blog.author_id);
+      const user = users.find(
+        (user) => user.id === pageContentItemData.author_id
+      );
 
       if (user) {
         setSelectedUserName(user.username);
       }
     }
-  }, [blog, users]);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch("/api/admin/categories");
-      if (!response.ok) {
-        throw new Error("Failed to fetch categories");
-      }
-      const data = await response.json();
-      setCategories(data); // Make sure to use the same state for both
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  }, [pageContentItemData, users]);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -150,17 +120,6 @@ const EditBlog = () => {
   if (!session) {
     return <div>Access Denied</div>;
   }
-  const handleFeaturedPostChange = (event) => {
-    setFeaturedPost(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const handlePublishTypeChange = (e) => {
-    setPublishType(e.target.value);
-  };
 
   const handleAuthorChange = (event) => {
     setSelectedUserName(event.target.value);
@@ -170,13 +129,7 @@ const EditBlog = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setImage(selectedFile);
-    setImageName(selectedFile ? selectedFile.name : ""); // Set the file name
-  };
-
-  const handleBlogUpdate = async (e) => {
+  const handlePageContentItemDataUpdate = async (e) => {
     try {
       e.preventDefault();
 
@@ -233,56 +186,41 @@ const EditBlog = () => {
       {formSubmitted && (
         <div className="toast toast-top toast-end z-50">
           <div className="alert alert-info">
-            <span>Blog Updated Successfully</span>
+            <span>Page content Updated successfully</span>
           </div>
         </div>
       )}
       <div className="card w-full bg-base-100 rounded-md">
-        <form className="card-body" onSubmit={handleBlogUpdate}>
+        <form className="card-body" onSubmit={handlePageContentItemDataUpdate}>
           <h1 className="pt-4 text-center text-3xl font-semibold">
-            Edit Blog Details
+            Edit Page Content
           </h1>
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Title</span>
-            </div>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="input input-bordered w-full placeholder-gray-500"
-              required
-            />
-          </label>
 
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Meta Description</span>
-            </div>
-            <textarea
-              type="text"
-              id="description" // Changed from 'desc'
-              name="description" // Changed from 'desc'
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-              className="textarea textarea-bordered placeholder-gray-500"
-              placeholder="Meta Description"
-              required
-            ></textarea>
-          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Page Title"
+            className="mt-8 input input-bordered w-full placeholder-gray-500"
+            required
+          />
 
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Blog Content</span>
-            </div>
-          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="textarea textarea-bordered placeholder-gray-500"
+            placeholder="Meta Description"
+            required
+          ></textarea>
 
           <DynamicSunEditor
             onChange={setContent}
             setContents={content}
-            placeholder="Blog Content"
+            placeholder="Page Content"
             className="text-black"
             height="300px"
             setOptions={{
@@ -310,40 +248,6 @@ const EditBlog = () => {
               backgroundColor: "red",
             }}
           />
-          <div className="mt-6">
-            <label
-              htmlFor="image"
-              className="p-2 border border-gray-300 cursor-pointer text-gray-500 hover:text-blue-700"
-            >
-              <span>{imageName ? imageName : "Upload New Blog Image"}</span>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-            </label>
-          </div>
-
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Is Featured Post?</span>
-            </div>
-          </label>
-
-          <select
-            onChange={handleFeaturedPostChange}
-            value={featuredPost || ""}
-            className="select select-bordered w-full"
-            required
-          >
-            <option disabled value="">
-              Featured post?
-            </option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
 
           {isAdmin && (
             <select
@@ -363,44 +267,9 @@ const EditBlog = () => {
             </select>
           )}
 
-          <select
-            onChange={handleCategoryChange}
-            value={selectedCategory || ""}
-            className="select select-bordered w-full"
-            required
-          >
-            <option disabled value="">
-              Add category
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={publishType}
-            onChange={handlePublishTypeChange}
-            className="mt-2 select select-bordered w-full"
-          >
-            <option value="now">Publish Now</option>
-            <option value="date">Select Date</option>
-          </select>
-
-          {publishType === "date" && (
-            <DatePicker
-              selected={publishDate}
-              onChange={(date) => setPublishDate(date)}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={5}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeCaption="Time"
-              className="mt-4 input input-bordered w-full max-w-xs"
-              minDate={new Date()}
-            />
-          )}
+          <label className="mt-2 border border-gray-300 p-2 text-sm rounded-md  w-full ">
+            Publish Now
+          </label>
 
           <div className="flex justify-end">
             <button

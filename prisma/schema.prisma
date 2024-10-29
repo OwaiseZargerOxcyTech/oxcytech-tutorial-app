@@ -25,6 +25,7 @@ model Usert {
   blogslive    Bloglivet[]     @relation("UserToBloglivet")
   blogs        Blogt[]         @relation("UserToBlogt")
   topics       TutorialTopic[] @relation("UserToTopic")
+  pagecontent  PageContent[]   @relation("UserToPageContent")
 }
 
 model Blogt {
@@ -141,4 +142,17 @@ model SideImg {
   id      Int    @id @default(autoincrement())
   image   String
   altText String
+}
+
+model PageContent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  slug        String
+  content     String?
+  published   String
+  publishDate DateTime
+  createdAt   DateTime @default(now())
+  author_id   Int
+  author      Usert    @relation("UserToPageContent", fields: [author_id], references: [id])
 }

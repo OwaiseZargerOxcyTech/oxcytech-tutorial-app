@@ -37,6 +37,11 @@ export default function SideNav() {
     },
 
     {
+      href: "/admin/pagecontent/all",
+      label: "Pages",
+      roles: ["admin"],
+    },
+    {
       href: "/admin/tutorials/all",
       label: "Tutorials",
       roles: ["admin"],
