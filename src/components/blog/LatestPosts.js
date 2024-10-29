@@ -60,30 +60,8 @@ export default function LatestPosts() {
       </h1>
       <div className="space-y-1">
         {latestBlogData?.map((blog, index) => (
-          <div
-            key={index}
-            className="relative flex items-start space-x-4 border rounded-md pt-2"
-          >
-            <div className="relative w-16 h-16 flex-shrink-0 m-2">
-              {/* Correct positioning */}
-              {blog.image && (
-                <Link
-                  prefetch={false}
-                  href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
-                  className="block relative w-full h-full"
-                >
-                  <Image
-                    src={blog.image}
-                    alt={blog.title}
-                    width={100}
-                    height={100}
-                    className="object-contain rounded-md"
-                  />
-                </Link>
-              )}
-            </div>
-
-            <div className="flex-1">
+          <div key={index} className="p-2">
+            <div>
               <Link
                 prefetch={false}
                 href={`/${getCategoryName(blog.category_id)}/${blog.slug}`}
@@ -92,9 +70,6 @@ export default function LatestPosts() {
                   {blog.title}
                 </h2>
               </Link>
-              <p className="text-xs text-gray-500 mt-1">
-                {getCategoryName(blog.category_id)}
-              </p>
             </div>
           </div>
         ))}
