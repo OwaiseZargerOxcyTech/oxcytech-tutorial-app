@@ -12,7 +12,7 @@ function ImageInSidebar() {
       try {
         const response = await fetch("/api/blogs/sideimage");
         const data = await response.json();
-        const altName = data.result.imageUrl.split("/").pop().split(".")[0];
+        const altName = data.result.altText;
         setAltText(altName);
         if (response.ok && data.result.imageUrl) {
           setImageUrl(data.result.imageUrl);
@@ -33,8 +33,8 @@ function ImageInSidebar() {
         <Image
           src={imageUrl}
           alt={altText}
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           className="w-full h-auto rounded-md shadow"
           crossOrigin="anonymous"
         />

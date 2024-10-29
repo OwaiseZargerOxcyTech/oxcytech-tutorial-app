@@ -138,6 +138,7 @@ model SocialMedia {
 }
 
 model SideImg {
-  id    Int    @id @default(autoincrement())
-  image String
+  id      Int    @id @default(autoincrement())
+  image   String
+  altText String
 }

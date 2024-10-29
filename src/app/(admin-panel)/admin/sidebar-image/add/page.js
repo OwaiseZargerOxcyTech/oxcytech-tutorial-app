@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const Page = () => {
   const [image, setImage] = useState(null);
+  const [altText, setAltText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageName, setImageName] = useState("");
   const [error, setError] = useState(null);
@@ -66,6 +67,7 @@ const Page = () => {
     const formData = new FormData();
     formData.append("image", image);
     formData.append("imageName", imageName);
+    formData.append("altText", altText);
 
     try {
       const response = await fetch("/api/blogs/sideimage", {
@@ -110,6 +112,17 @@ const Page = () => {
               accept="image/*" // restrict file selection to images
             />
           </label>
+
+          <input
+            type="text"
+            id="altText"
+            name="altText"
+            value={altText}
+            onChange={(e) => setAltText(e.target.value)}
+            placeholder="altText"
+            className="mt-4 input input-bordered w-full placeholder-gray-500"
+            required
+          />
 
           {error && <div className="text-red-500">{error}</div>}
 
