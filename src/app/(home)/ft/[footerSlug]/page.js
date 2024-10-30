@@ -1,30 +1,55 @@
+"use client";
+import { useEffect, useState } from "react";
+
 const FooterPage = ({ params }) => {
+  const { footerSlug } = params;
+  const [pageContent, setPageContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPageContent = async () => {
+      try {
+        const response = await fetch(
+          `/api/admin/pagecontent/get-for-ui?footerSlug=${footerSlug}`
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setPageContent(data.result[0]);
+          console.log(data.result[0]);
+        } else {
+          console.error("Error fetching page content:", data.error);
+        }
+      } catch (error) {
+        console.error("Fetch page content error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPageContent();
+  }, [footerSlug]);
+
+  // Conditional rendering to avoid null errors
+  if (loading) {
+    return <div className="min-h-screen">Loading...</div>;
+  }
+
+  if (!pageContent) {
+    return <p>No content available.</p>;
+  }
+
   return (
     <footer className="min-h-screen m-8">
-      <h1 className="text-2xl text-green-700 text-center">
-        {params.footerSlug.replace(/\s+/g, " ").replace(/-+/g, " ")}
-      </h1>
-      <p>
-        What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
-        and typesetting industry. Lorem Ipsum has been the industry's standard
-        dummy text ever since the 1500s, when an unknown printer took a galley
-        of type and scrambled it to make a type specimen book. It has survived
-        not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with
-        the release of Letraset sheets containing Lorem Ipsum passages, and more
-        recently with desktop publishing software like Aldus PageMaker including
-        versions of Lorem Ipsum. Why do we use it? It is a long established fact
-        that a reader will be distracted by the readable content of a page when
-        looking at its layout. The point of using Lorem Ipsum is that it has a
-        more-or-less normal distribution of letters, as opposed to using
-        'Content here, content here', making it look like readable English. Many
-        desktop publishing packages and web page editors now use Lorem Ipsum as
-        their default model text, and a search for 'lorem ipsum' will uncover
-        many web sites still in their infancy. Various versions have evolved
-        over the years, sometimes by accident, sometimes on purpose (injected
-        humour and the like).
-      </p>
+      <div className="max-w-3xl mx-auto p-6 lg:p-8 bg-white shadow-md rounded-lg">
+        <h1 className="text-4xl font-extrabold mb-6 text-gray-900 leading-tight">
+          {pageContent.title}
+        </h1>
+        <div
+          className="prose prose-lg lg:prose-xl text-gray-800 leading-relaxed max-w-none"
+          dangerouslySetInnerHTML={{ __html: pageContent.content }}
+        />
+      </div>
     </footer>
   );
 };
+
 export default FooterPage;
