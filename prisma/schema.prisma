@@ -128,6 +128,7 @@ model Footer {
   id       Int     @id @default(autoincrement())
   name     String
   slug     String  @unique
+  link     String
   isActive Boolean
 }
 

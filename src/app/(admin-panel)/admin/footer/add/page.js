@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 
 const Page = () => {
   const [footer, setFooter] = useState("");
+  const [footerLink, setFooterLink] = useState("");
   const [formSubmitted, setFormSubmitted] = useState("");
 
   const { data: session, status } = useSession();
@@ -18,14 +19,6 @@ const Page = () => {
 
   const handleAddFooter = async (e) => {
     e.preventDefault();
-    const slug = footer
-      .toLowerCase()
-      .trim()
-      .replace(/[.]+/g, "")
-      .replace(/^[^\w]+|[^\w]+$/g, "")
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
 
     const isActive = true;
 
@@ -38,7 +31,7 @@ const Page = () => {
         body: JSON.stringify({
           name: footer,
           isActive,
-          slug,
+          link: footerLink,
         }),
       });
 
@@ -80,6 +73,20 @@ const Page = () => {
                 name="footer"
                 value={footer}
                 onChange={(e) => setFooter(e.target.value)}
+                className="mt-2 p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div className="mt-6">
+              <label htmlFor="footerlink" className="text-gray-700">
+                Add Footer Link
+              </label>
+              <input
+                type="text"
+                id="footerlink"
+                name="footerlink"
+                value={footerLink}
+                onChange={(e) => setFooterLink(e.target.value)}
                 className="mt-2 p-2 border border-gray-300 rounded w-full"
                 required
               />

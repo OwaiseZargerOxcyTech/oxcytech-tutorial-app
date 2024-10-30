@@ -45,7 +45,7 @@ export async function DELETE(req, { params }) {
 export async function PUT(req, { params }) {
   const { id } = params;
   try {
-    const { name } = await req.json();
+    const { name, link } = await req.json();
     const slug = name
       .toLowerCase()
       .replace(/[^\w\s-]/g, "")
@@ -54,7 +54,7 @@ export async function PUT(req, { params }) {
       .replace(/-+/g, "-");
     const updatedFooter = await prisma.footer.update({
       where: { id: parseInt(id) },
-      data: { name, slug },
+      data: { name, slug, link },
     });
     return NextResponse.json(updatedFooter, { status: 200 });
   } catch (error) {

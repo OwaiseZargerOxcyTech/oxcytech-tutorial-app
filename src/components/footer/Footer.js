@@ -28,7 +28,7 @@ export default function Footer() {
           .filter((footer) => footer.isActive)
           .map((footer) => ({
             label: footer.name,
-            href: `/${footer.slug}`,
+            href: `${footer.link}`,
             current: false,
           }));
         setActiveFooters(activeFooter);
@@ -81,13 +81,7 @@ export default function Footer() {
           <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
             {activeFooters.map((item, index) => (
               <li key={index} className="flex">
-                <Link
-                  href={`/ft/${item.label
-                    .replace(/[^\w\s-]/g, "")
-                    .trim()
-                    .replace(/\s+/g, "-")
-                    .replace(/-+/g, "-")}`}
-                >
+                <Link href={`/ft/${item.href}`}>
                   <p className="text-sm md:text-base">{item.label} /</p>
                 </Link>
               </li>

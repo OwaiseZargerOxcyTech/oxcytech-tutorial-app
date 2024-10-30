@@ -18,11 +18,18 @@ export async function GET() {
 // POST Handler: Add New footer
 export async function POST(request) {
   try {
-    const { name, slug, isActive } = await request.json();
+    const { name, link, isActive } = await request.json();
 
-    if (!name || !slug) {
+    const slug = name
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+
+    if (!name || !slug || !link) {
       return NextResponse.json(
-        { error: "Name and slug are required" },
+        { error: "Name and link are required" },
         { status: 400 }
       );
     }
@@ -44,6 +51,7 @@ export async function POST(request) {
         name,
         isActive,
         slug,
+        link,
       },
     });
 

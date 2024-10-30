@@ -15,7 +15,6 @@ const FooterPage = ({ params }) => {
         const data = await response.json();
         if (response.ok) {
           setPageContent(data.result[0]);
-          console.log(data.result[0]);
         } else {
           console.error("Error fetching page content:", data.error);
         }

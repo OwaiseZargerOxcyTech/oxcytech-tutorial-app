@@ -7,6 +7,7 @@ const EditFooter = () => {
   const router = useRouter();
   const { id } = useParams();
   const [name, setName] = useState("");
+  const [footerLink, setFooterLink] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -21,6 +22,7 @@ const EditFooter = () => {
         }
         const data = await response.json();
         setName(data.name);
+        setFooterLink(data.link);
         setIsActive(data.isActive);
       } catch (err) {
         setError(err.message);
@@ -47,6 +49,7 @@ const EditFooter = () => {
         body: JSON.stringify({
           name,
           isActive,
+          link: footerLink,
         }),
       });
 
@@ -88,6 +91,20 @@ const EditFooter = () => {
                 name="footer"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="mt-2 p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div className="mt-6">
+              <label htmlFor="footerlink" className="text-gray-700">
+                Add Footer Link
+              </label>
+              <input
+                type="text"
+                id="footerlink"
+                name="footerlink"
+                value={footerLink}
+                onChange={(e) => setFooterLink(e.target.value)}
                 className="mt-2 p-2 border border-gray-300 rounded w-full"
                 required
               />
