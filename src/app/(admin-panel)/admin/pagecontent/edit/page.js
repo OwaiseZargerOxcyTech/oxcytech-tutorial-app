@@ -22,8 +22,8 @@ const EditBlog = () => {
   const [users, setUsers] = useState([]);
   const [selectedUserName, setSelectedUserName] = useState("");
   const [authorId, setAuthorId] = useState();
-  const [selectedId, setSelectedId] = useState("");
   const [publishDate, setPublishDate] = useState(new Date());
+  const [selectedId, setSelectedId] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [pageContentItemData, setPageContentItemData] = useState(false);
 
@@ -133,35 +133,22 @@ const EditBlog = () => {
     try {
       e.preventDefault();
 
-      const publishDateValue = publishType === "now" ? new Date() : publishDate;
-      if (!(publishDateValue instanceof Date) || isNaN(publishDateValue)) {
+      if (!(publishDate instanceof Date) || isNaN(publishDate)) {
         console.error("Invalid publish date");
         setFormSubmitted(false);
         return;
       }
 
-      const category = categories.find(
-        (category) => category.id === selectedCategory
-      );
-      const categoryName = category ? category.name : "";
-
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("description", desc);
+      formData.append("description", description);
       formData.append("content", content);
-      if (image) {
-        formData.append("image", image);
-      }
       formData.append("selectedId", selectedId);
+      formData.append("publishDate", publishDate);
       formData.append("published", searchParams.get("published"));
-      formData.append("publishDate", publishDateValue.toISOString());
       formData.append("author_id", authorId);
-      formData.append("blogLiveId", blogLiveId);
-      formData.append("featuredpost", featuredPost);
-      formData.append("categoryId", selectedCategory);
-      formData.append("categoryName", categoryName);
 
-      const response = await fetch("/api/admin/blogs/update", {
+      const response = await fetch("/api/admin/pagecontent/update", {
         method: "PUT",
         body: formData,
       });
@@ -170,13 +157,13 @@ const EditBlog = () => {
       console.log(result);
 
       if (error !== undefined) {
-        console.log("Blog Updated error:", error);
+        console.log("page content Updated error:", error);
       } else {
-        router.push("/admin/blogs/all");
+        router.push("/admin/pagecontent/all");
       }
       setFormSubmitted(false);
     } catch (error) {
-      console.error("Blog Update operation error", error);
+      console.error("page content Update operation error", error);
       setFormSubmitted(false);
     }
   };

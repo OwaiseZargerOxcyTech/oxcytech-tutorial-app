@@ -13,8 +13,6 @@ const encryptID = (id, secretKey) => {
 const AllPageContentTable = () => {
   const [pageContentList, setPageContentList] = useState([]);
   const [selectedId, setSelectedId] = useState();
-  const [published, setPublished] = useState();
-  const [slug, setSlug] = useState();
 
   const router = useRouter();
 
@@ -31,20 +29,20 @@ const AllPageContentTable = () => {
         ),
       },
 
-      {
-        accessorKey: "published",
-        header: "Published",
-        size: 40,
-        Cell: ({ cell }) => (
-          <div>
-            {cell.getValue() === "Y"
-              ? "Yes"
-              : cell.getValue() === "scheduled"
-              ? "scheduled"
-              : "No"}
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "published",
+      //   header: "Published",
+      //   size: 40,
+      //   Cell: ({ cell }) => (
+      //     <div>
+      //       {cell.getValue() === "Y"
+      //         ? "Yes"
+      //         : cell.getValue() === "scheduled"
+      //         ? "scheduled"
+      //         : "No"}
+      //     </div>
+      //   ),
+      // },
       {
         accessorKey: "publishDate",
         header: "Published Date",
@@ -71,9 +69,7 @@ const AllPageContentTable = () => {
             <button className="mr-2">
               <EyeIcon
                 onClick={() => {
-                  row.original.published === "Y"
-                    ? handleBlogLiveView(row)
-                    : handleBlogView(row);
+                  handleView(row);
                 }}
                 className={
                   row.original.published === "Y"
@@ -116,7 +112,6 @@ const AllPageContentTable = () => {
       });
 
       const { error, result } = await response.json();
-      console.log("Fetched Page content List:", result);
       if (error !== undefined) {
         console.log("Page content Get error:", error);
       }
@@ -130,17 +125,9 @@ const AllPageContentTable = () => {
     fetchPageContent();
   }, []);
 
-  const handleBlogLiveView = async (row) => {
-    const blogSlug = row.original.slug;
-    const category = row.original.categoryName.toLowerCase();
-    const url = `/${category}/${blogSlug}`;
-
-    window.open(url, "_blank");
-  };
-
-  const handleBlogView = async (row) => {
-    const url = `/unpublished-blog/${row.original.id}`;
-
+  const handleView = async (row) => {
+    const pageSlug = row.original.slug;
+    const url = `/ft/${pageSlug}`;
     window.open(url, "_blank");
   };
 

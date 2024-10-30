@@ -13,7 +13,7 @@ const AddPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
-  const [published, setPublished] = useState("N");
+  const [published, setPublished] = useState("Y");
   const [publishDate, setPublishDate] = useState(new Date());
   const [users, setUsers] = useState([]);
   const [selectedUserName, setSelectedUserName] = useState("");
