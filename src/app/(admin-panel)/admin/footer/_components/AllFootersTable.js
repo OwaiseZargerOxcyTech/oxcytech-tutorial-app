@@ -43,10 +43,8 @@ const AllFootersTable = () => {
             .replace(/-+/g, "-");
 
           return (
-            <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
-              <Link href={`footeradmin/${slug}`} className="text-black-500 ">
+            <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>              
                 {cell.getValue()}
-              </Link>
             </div>
           );
         },

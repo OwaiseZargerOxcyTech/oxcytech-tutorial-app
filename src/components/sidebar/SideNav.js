@@ -24,7 +24,11 @@ export default function SideNav() {
       label: "Authors",
       roles: ["admin"],
     },
-
+    {
+      href: "/admin/categories/all",
+      label: "Categories",
+      roles: ["admin"],
+    },
     {
       href: "/admin/blogs/all",
       label: "Blogs",
@@ -50,14 +54,27 @@ export default function SideNav() {
       href: "/authors/tutorials/all",
       label: "Tutorials",
       roles: ["employee"],
-    },
-
+    },  
     {
-      href: "/admin/categories/all",
-      label: "Categories",
+      href: "/admin/logo/add",
+      label: "Logo Text",
       roles: ["admin"],
     },
-
+    {
+      href: "/admin/featuredapp/add",
+      label: "Featured app",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/sidebar-image/add",
+      label: "Image in Sidebar",
+      roles: ["admin"],
+    },
+    {
+      href: "/admin/social-media/all",
+      label: "Social Media",
+      roles: ["admin"],
+    },
     {
       href: "/admin/footer/all",
       label: "Footers",
@@ -65,23 +82,8 @@ export default function SideNav() {
     },
 
     {
-      href: "/admin/social-media/all",
-      label: "Social Media",
-      roles: ["admin"],
-    },
-    {
       href: "/admin/favicon/add",
       label: "Favicon",
-      roles: ["admin"],
-    },
-    {
-      href: "/admin/logo/add",
-      label: "Logo Text",
-      roles: ["admin"],
-    },
-    {
-      href: "/admin/sidebar-image/add",
-      label: "Image in Sidebar",
       roles: ["admin"],
     },
   ];

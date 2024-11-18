@@ -16,7 +16,7 @@ export async function POST(req) {
     const authorId = parseInt(data.get("authorId"), 10); // Change to 'authorId'
     const featuredPost = data.get("featuredPost");
     const categoryId = parseInt(data.get("categoryId"), 10);
-
+ 
     let newBlog;
     let slug;
 

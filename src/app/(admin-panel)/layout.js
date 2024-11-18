@@ -28,6 +28,7 @@ export default function BlogLayout({ children }) {
 
         const { result } = await response.json();
         setFaviconImageUrl(result?.image);
+        // console.log(result.image)
       } catch (error) {
         console.log("error", error);
       }

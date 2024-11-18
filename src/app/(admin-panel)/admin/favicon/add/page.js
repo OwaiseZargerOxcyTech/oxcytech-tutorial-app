@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 const Page = () => {
   const [image, setImage] = useState("");
   const [imageName, setImageName] = useState("");
-  const [formSubmitted, setFormSubmitted] = useState();
+  const [formSubmitted, setFormSubmitted] = useState(false); // Initialize with `false`
 
   const { data: session, status } = useSession();
 
@@ -20,7 +20,7 @@ const Page = () => {
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImage(selectedFile);
-    setImageName(selectedFile ? selectedFile.name : ""); // Set the file name
+    setImageName(selectedFile ? selectedFile.name : "");
   };
 
   const handleAddFavicon = async (e) => {
@@ -29,6 +29,12 @@ const Page = () => {
       setFormSubmitted(true);
 
       setTimeout(async () => {
+        if (!image) {
+          console.log("No image selected");
+          setFormSubmitted(false);
+          return;
+        }
+
         const formData = new FormData();
         formData.append("image", image);
         formData.append("apiName", "addfavicon");
@@ -40,18 +46,23 @@ const Page = () => {
 
         const { error, result } = await response.json();
 
-        if (error !== undefined) {
+        if (error) {
           console.log("Favicon Added error:", error);
+        } else {
+          console.log("Favicon added successfully", result);
         }
+        
+        // Reset form state
         setImage("");
         setImageName("");
-        window.location.href = "/allblogadmin";
         setFormSubmitted(false);
       }, 3000);
     } catch (error) {
       console.error("Favicon addition operation error", error);
+      setFormSubmitted(false);
     }
   };
+
   return (
     <>
       {formSubmitted && (
@@ -63,7 +74,7 @@ const Page = () => {
       )}
 
       <div className="card w-full bg-base-100 rounded-md">
-        <form className="card-body">
+        <form className="card-body" onSubmit={handleAddFavicon}>
           <h1 className="pt-4 text-center text-3xl font-semibold">
             Add Favicon
           </h1>
@@ -84,7 +95,7 @@ const Page = () => {
 
           <div className="flex justify-end">
             <button
-              onSubmit={handleAddFavicon}
+              type="submit" // Corrected here
               className="btn bg-[#dc2626] w-20 text-white"
             >
               Save

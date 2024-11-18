@@ -6,6 +6,7 @@ import Pagination from "../common/Pagination";
 import SingleBlogPage from "./SingleBlogPage";
 import ImageInSidebar from "./ImageInSidebar";
 import LatestPosts from "./LatestPosts";
+import FeaturedApp from "./FeaturedApp";
 
 const BlogPage = ({ data, type }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,6 +58,7 @@ const BlogPage = ({ data, type }) => {
               <ImageInSidebar />
               <FeaturedPosts />
               <LatestPosts />
+              <FeaturedApp/>
             </div>
           </div>
         </div>

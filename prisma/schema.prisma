@@ -157,3 +157,10 @@ model PageContent {
   author_id   Int
   author      Usert    @relation("UserToPageContent", fields: [author_id], references: [id])
 }
+
+model FeaturedApp {
+  id             Int        @id @default(autoincrement())
+  title          String
+  description    String?  
+  image          String?
+}

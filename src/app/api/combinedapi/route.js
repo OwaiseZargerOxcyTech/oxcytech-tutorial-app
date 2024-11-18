@@ -19,7 +19,7 @@ async function deleteBlob(blobName) {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
-        },
+        }, 
       }
     );
 
@@ -494,7 +494,7 @@ export async function POST(req, res) {
         { status: 500 }
       );
     }
-  } else if (apiName === "addfavicon") {
+  }else if (apiName === "addfavicon") {
     const image = data.get("image");
     if (typeof image === "object") {
       const favicon = await prisma.favicont.findFirst();
@@ -502,7 +502,8 @@ export async function POST(req, res) {
         const blob = await put(`favicon.ico`, image, {
           access: "public",
         });
-
+        console.log("New Blob URL:", blob.url);
+  
         await prisma.favicont.create({
           data: {
             image: blob.url,
@@ -510,13 +511,15 @@ export async function POST(req, res) {
         });
       } else {
         const BlobName = getBlobNameFromUrl(favicon.image);
-
-        deleteBlob(BlobName);
-
+        console.log("Deleting old blob:", BlobName);
+  
+        await deleteBlob(BlobName);
+  
         const blob = await put(`favicon.ico`, image, {
           access: "public",
         });
-
+        console.log("Updated Blob URL:", blob.url);
+  
         await prisma.favicont.update({
           where: { id: favicon.id },
           data: {
@@ -524,8 +527,11 @@ export async function POST(req, res) {
           },
         });
       }
+    } else {
+      console.error("Image data is not an object:", image);
     }
-  } else if (apiName === "getfavicon") {
+  }
+   else if (apiName === "getfavicon") {
     try {
       const favicon = await prisma.favicont.findFirst();
 
