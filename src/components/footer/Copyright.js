@@ -20,12 +20,6 @@ export default function Copyright() {
             | Terms of Service
           </Link>
         </span>
-        <h6 className="mb-4 text-gray-900 font-bold flex items-center justify-center md:justify-start space-x-3">
-          <Link href="/">Fb.</Link>
-          <Link href="/">/ Ig.</Link>
-          <Link href="/">/ Tw.</Link>
-          <Link href="/">/ Be.</Link>
-        </h6>
       </div>
     </div>
   );

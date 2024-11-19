@@ -54,14 +54,14 @@ export default function SideNav() {
       href: "/authors/tutorials/all",
       label: "Tutorials",
       roles: ["employee"],
-    },  
+    },
     {
       href: "/admin/logo/add",
       label: "Logo Text",
       roles: ["admin"],
     },
     {
-      href: "/admin/featuredapp/add",
+      href: "/admin/featuredapp/all",
       label: "Featured app",
       roles: ["admin"],
     },

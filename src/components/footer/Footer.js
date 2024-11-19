@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import Copyright from "./Copyright";
 
 export default function Footer() {
   const [activeFooters, setActiveFooters] = useState([]);
@@ -74,8 +75,9 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-700 mt-4 pt-4 w-full">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-50 border-t border-gray-700 p-8 w-full">
+      <Copyright />
+      <div className="container mt-4 w-full mx-auto max-w-screen-xl  md:items-center md:justify-between">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Footer Links */}
           <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
