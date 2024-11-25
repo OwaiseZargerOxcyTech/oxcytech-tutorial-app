@@ -10,13 +10,11 @@ const SingleBlogPage = ({ blog }) => {
       </h1>
 
       {/* Meta Information */}
-      <div className="text-gray-500 text-sm mb-6 flex flex-col  sm:justify-between">
+      <div className="text-gray-500 text-sm mb-6 flex sm:justify-between">
         <div>
-          <span className="font-medium">Published on:</span>{" "}
+          <span className="font-medium">Published on:</span>
           {new Date(blog.publishDate).toLocaleDateString()}
-        </div>
-        <div>
-          <span className="font-medium">Author:</span> {blog.authorName}
+          <span className="font-medium"> Author:</span> {blog.authorName}
         </div>
       </div>
 
@@ -26,9 +24,9 @@ const SingleBlogPage = ({ blog }) => {
           <Image
             src={blog.image}
             alt={blog.title}
-            width={800}
-            height={450}
-            className="w-full h-auto object-cover"
+            width={400}
+            height={300}
+            className="object-cover"
           />
         </div>
       )}

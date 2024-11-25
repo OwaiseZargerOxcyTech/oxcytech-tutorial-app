@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 const Page = () => {
   const [image, setImage] = useState(null);
   const [altText, setAltText] = useState("");
+  const [link, setLink] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageName, setImageName] = useState("");
   const [error, setError] = useState(null);
@@ -68,6 +69,7 @@ const Page = () => {
     formData.append("image", image);
     formData.append("imageName", imageName);
     formData.append("altText", altText);
+    formData.append("link", link);
 
     try {
       const response = await fetch("/api/blogs/sideimage", {
@@ -120,6 +122,17 @@ const Page = () => {
             value={altText}
             onChange={(e) => setAltText(e.target.value)}
             placeholder="altText"
+            className="mt-4 input input-bordered w-full placeholder-gray-500"
+            required
+          />
+
+          <input
+            type="text"
+            id="link"
+            name="link"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="Add link"
             className="mt-4 input input-bordered w-full placeholder-gray-500"
             required
           />

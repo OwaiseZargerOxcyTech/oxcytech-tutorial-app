@@ -6,19 +6,8 @@ export default function Copyright() {
     <div>
       <div className="w-full mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
         <span className="text-sm text-gray-500 sm:text-center ">
-          © 2024 All rights reserved.
-          <Link
-            href="/"
-            className="hover:text-red-600 mx-1 font-bold text-gray-900 hover:underline "
-          >
-            | Privacy & Cookie Policy
-          </Link>
-          <Link
-            href="/"
-            className="hover:text-red-600 font-bold text-gray-900 hover:underline "
-          >
-            | Terms of Service
-          </Link>
+          Copyright © 2024 OTS Pvt Limited. All rights reserved. OTS Blogs© is a
+          registered trademark
         </span>
       </div>
     </div>

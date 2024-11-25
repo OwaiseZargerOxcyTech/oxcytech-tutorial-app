@@ -9,7 +9,6 @@ export async function GET(req) {
   const pageSlug = url.searchParams.get("footerSlug");
 
   try {
-    // If only the category is provided, fetch all published blogs in that category
     if (pageSlug) {
       const pageContent = await prisma.pageContent.findMany({
         where: {

@@ -75,7 +75,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-700 p-8 w-full">
+    <footer className="bg-gray-50 border-t border-gray-700 p-6 w-full">
       <Copyright />
       <div className="container mt-4 w-full mx-auto max-w-screen-xl  md:items-center md:justify-between">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">

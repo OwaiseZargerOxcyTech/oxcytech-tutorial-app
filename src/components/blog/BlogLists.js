@@ -8,15 +8,15 @@ export default function BlogLists({ blogData }) {
       {blogData &&
         blogData.map((blog) => (
           <div key={blog.id} className="border-b border-gray-300 p-6">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="flex flex-col md:flex-row items-start">
               {/* Image Section */}
               {blog.image && (
                 <div className="relative w-full md:w-64 h-44 rounded-md overflow-hidden ">
                   <Image
                     src={blog.image}
                     alt={blog.title}
-                    width={320}
-                    height={280}
+                    width={220}
+                    height={140}
                     className="object-contain"
                   />
                 </div>
@@ -24,42 +24,45 @@ export default function BlogLists({ blogData }) {
 
               {/* Content Section */}
               <div className="flex-1 leading-tight">
+                <h3 className="mb-2 text-lg font-sans font-semibold text-gray-500 ">
+                  {blog.categoryName}
+                </h3>
                 <Link
                   prefetch={false}
                   href={`${blog.categoryName.toLowerCase()}/${blog.slug}`}
                 >
-                  <h1 className="mb-2 text-xl font-bold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
+                  <h3 className="mb-2 text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
                     {blog.title}
-                  </h1>
+                  </h3>
                 </Link>
 
                 {/* Author and Date */}
                 {blog.authorName && blog.publishDate && (
                   <p className="mb-3 text-sm text-gray-500">
-                    By{" "}
+                    By
                     <span className="font-semibold text-black">
-                      {blog.authorName}
-                    </span>{" "}
-                    on{" "}
+                      {` ${blog.authorName} `}
+                    </span>
+                    on
                     <span>
-                      {new Date(blog.publishDate).toLocaleDateString()}
+                      {` ${new Date(blog.publishDate).toLocaleDateString()}`}
                     </span>
                   </p>
                 )}
 
                 {/* Blog Content Preview */}
 
-                {blog.content && (
+                {/* {blog.content && (
                   <p
                     className="mb-1 text-gray-700 text-justify"
                     dangerouslySetInnerHTML={{
                       __html: blog.content.slice(0, 150) + "...",
                     }}
                   />
-                )}
+                )} */}
 
                 {/* Read More Button */}
-                <Link
+                {/* <Link
                   prefetch={false}
                   href={`${blog.categoryName
                     .toLowerCase()
@@ -72,7 +75,7 @@ export default function BlogLists({ blogData }) {
                   className="inline-block text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md shadow-md transition-colors duration-300"
                 >
                   Read More
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

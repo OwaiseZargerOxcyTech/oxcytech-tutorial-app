@@ -143,6 +143,7 @@ model SideImg {
   id      Int    @id @default(autoincrement())
   image   String
   altText String
+  link    String?
 }
 
 model PageContent {

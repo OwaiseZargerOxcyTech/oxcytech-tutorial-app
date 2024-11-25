@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function ImageInSidebar() {
   const [imageUrl, setImageUrl] = useState("");
   const [altText, setAltText] = useState("");
+  const [link, setLink] = useState("");
   const [error, setError] = useState("");
 
   // Fetch the image URL from the backend when the component mounts
@@ -13,7 +15,9 @@ function ImageInSidebar() {
         const response = await fetch("/api/blogs/sideimage");
         const data = await response.json();
         const altName = data.result.altText;
+        const link = data.result.link;
         setAltText(altName);
+        setLink(link);
         if (response.ok && data.result.imageUrl) {
           setImageUrl(data.result.imageUrl);
         } else {
@@ -30,14 +34,16 @@ function ImageInSidebar() {
   return (
     <div>
       {imageUrl && (
-        <Image
-          src={imageUrl}
-          alt={altText}
-          width={300}
-          height={300}
-          className="w-full h-auto rounded-md shadow"
-          crossOrigin="anonymous"
-        />
+        <Link prefetch={false} href={`/ft/${link}`}>
+          <Image
+            src={imageUrl}
+            alt={altText}
+            width={300}
+            height={300}
+            className="w-full h-auto rounded-md shadow"
+            crossOrigin="anonymous"
+          />
+        </Link>
       )}
     </div>
   );

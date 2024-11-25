@@ -10,6 +10,7 @@ export async function POST(request) {
     const image = formData.get("image"); // Get the uploaded image
     const imageName = formData.get("imageName"); // Optional image name field
     const altText = formData.get("altText");
+    const link = formData.get("link");
 
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
@@ -33,12 +34,12 @@ export async function POST(request) {
       // Update existing image with new URL and name
       updatedImage = await prisma.sideImg.update({
         where: { id: existingImage.id },
-        data: { image: imageUrl, altText },
+        data: { image: imageUrl, altText, link },
       });
     } else {
       // Create a new image entry if no image exists
       updatedImage = await prisma.sideImg.create({
-        data: { image: imageUrl, altText },
+        data: { image: imageUrl, altText, link },
       });
     }
 
@@ -46,6 +47,7 @@ export async function POST(request) {
       id: updatedImage.id,
       imageUrl: updatedImage.image,
       altText: updatedImage.altText,
+      link: updatedImage.link,
     };
 
     return NextResponse.json({ result: responseData }, { status: 200 });
@@ -70,6 +72,7 @@ export async function GET() {
       id: sideImage.id,
       imageUrl: sideImage.image,
       altText: sideImage.altText,
+      link: sideImage.link,
     };
 
     return NextResponse.json({ result: responseData }, { status: 200 });
