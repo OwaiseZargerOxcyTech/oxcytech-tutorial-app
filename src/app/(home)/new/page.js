@@ -48,10 +48,7 @@ const HairServices = () => {
                     <p>From $10</p>
                     <p>Trim only</p>
                 </div>
-                <div className="service">
-                    <h3>Neck Clean Up</h3>
-                    <p>Complementary service</p>
-                </div>
+               
             </div>
         </div>
     );
